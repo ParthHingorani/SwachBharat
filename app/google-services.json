@@ -1,0 +1,71 @@
+{
+  "project_info": {
+    "project_number": "504996869517",
+    "firebase_url": "https://swach-bharat-c48c5.firebaseio.com",
+    "project_id": "swach-bharat-c48c5",
+    "storage_bucket": "swach-bharat-c48c5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:504996869517:android:41bd7c18dc74ed53",
+        "android_client_info": {
+          "package_name": "com.teamhack.swachbharat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "504996869517-qkf0tibtrekes1okg9kaa62326jq5744.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.teamhack.swachbharat",
+            "certificate_hash": "7CB8FFE1BA47852E281D777BA8257FA81FAFD23D"
+          }
+        },
+        {
+          "client_id": "504996869517-qfjsu9vph31a27aflsa77o2psmpa2aki.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.teamhack.swachbharat",
+            "certificate_hash": "79D97B0C13144C59CB1B79345A52083771567B27"
+          }
+        },
+        {
+          "client_id": "504996869517-9qt84aqegc1404huolv478jjb29dt135.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.teamhack.swachbharat",
+            "certificate_hash": "2DAA5D2B6E7D34BF2B2F6B399FBC63C41053CC56"
+          }
+        },
+        {
+          "client_id": "504996869517-41tmpbf9ciqtt2fkqpk4t17tlp501e5c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLFqMQJgVsd8qjEr8kw4RwJR4nYW_WuIY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "504996869517-41tmpbf9ciqtt2fkqpk4t17tlp501e5c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
