@@ -1,5 +1,6 @@
 package com.teamhack.swachbharat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,7 +19,9 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 import com.teamhack.swachbharat.Feed.FeedFragment;
+import com.teamhack.swachbharat.Login.LoginActivity;
 import com.teamhack.swachbharat.Profile.ProfileFragment;
 import com.teamhack.swachbharat.Share.ShareFragment;
 import com.teamhack.swachbharat.Social.SocialFragment;
@@ -35,19 +38,24 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
 
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
+        Fragment fragment= new  FeedFragment();
+        transaction.replace(R.id.content_main,fragment);
+        transaction.commit();
+
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -57,7 +65,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
         txt_nav_email= (TextView) navigationView.getHeaderView(0).findViewById(R.id.txt_nav_email);
         txt_nav_username= (TextView) navigationView.getHeaderView(0).findViewById(R.id.txt_nav_username);
         txt_nav_username.setText(firebaseUser.getDisplayName());
@@ -116,6 +124,10 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_profile) {
             fragmentClass= ProfileFragment.class;
+        } else if (id == R.id.nav_logout){
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            finish();
         }
 
         if(fragmentClass!=null){

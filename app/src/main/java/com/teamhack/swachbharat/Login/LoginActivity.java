@@ -100,6 +100,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
             } else {
                 updateUI(null);
             }
