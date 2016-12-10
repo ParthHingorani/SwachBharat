@@ -17,7 +17,7 @@
             android:text="Location Activity Title"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textStyle="normal|bold"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,6 +30,7 @@
                 android:id="@+id/txt_loc_activity_status"
                 android:text="Status (Going on/Upcoming/Completed)"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="12sp"
                 android:layout_marginRight="10dp"
                 android:layout_marginEnd="10dp"
                 />

@@ -1,17 +1,231 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.teamhack.swachbharat.Statistics.StatisticsFragment">
+ <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Statistics"
-        android:textStyle="normal|bold"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:gravity="center" />
+        android:layout_height="wrap_content"
+        tools:context="com.teamhack.swachbharat.Statistics.StatisticsFragment"
+        android:orientation="vertical"
+        >
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/txt_usr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Users :"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:textColor="#333333"
+                />
+
+            <ListView
+                android:id="@+id/usr_list_stats"
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:layout_margin="12dp"
+                android:padding="3dp"
+                android:nestedScrollingEnabled="true"
+                >
+            </ListView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/txt_loc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Locations : "
+                android:textColor="#333333"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                />
+
+            <ListView
+                android:id="@+id/loc_list_stats"
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:layout_margin="12dp"
+                android:padding="3dp"
+                android:nestedScrollingEnabled="true"
+                >
+            </ListView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/txt_best_usr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Best Users : "
+                android:textColor="#333333"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                />
+
+            <ListView
+                android:id="@+id/best_usr_list_stats"
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:layout_margin="12dp"
+                android:padding="3dp"
+                android:nestedScrollingEnabled="true"
+                >
+            </ListView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/txt_best_ngo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Best NGOs : "
+                android:textColor="#333333"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                />
+
+            <ListView
+                android:id="@+id/best_ngo_list_stats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:padding="3dp"
+                android:nestedScrollingEnabled="true"
+                >
+            </ListView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/txt_loc_activity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Location Activities : "
+                android:textColor="#333333"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                />
+
+            <ListView
+                android:id="@+id/loc_activity_list_stats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:padding="3dp"
+                android:nestedScrollingEnabled="true"
+                >
+            </ListView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/txt_task"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tasks : "
+                android:textColor="#333333"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                />
+
+            <ListView
+                android:id="@+id/task_list_stats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:padding="3dp"
+                android:nestedScrollingEnabled="true"
+                >
+            </ListView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/txt_active_usr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Active Users : "
+                android:textColor="#333333"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                />
+
+            <ListView
+                android:id="@+id/active_usr_list_stats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:padding="3dp"
+                android:nestedScrollingEnabled="true"
+                >
+            </ListView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

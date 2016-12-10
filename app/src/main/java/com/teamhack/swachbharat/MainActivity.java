@@ -1,13 +1,11 @@
 package com.teamhack.swachbharat;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,18 +26,16 @@ import com.teamhack.swachbharat.Share.ShareFragment;
 import com.teamhack.swachbharat.Social.SocialFragment;
 import com.teamhack.swachbharat.Statistics.StatisticsFragment;
 
-import org.w3c.dom.Text;
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    ImageView usr_img;
     TextView txt_nav_username,txt_nav_email;
-    FirebaseUser firebaseUser;
+    FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -63,13 +60,18 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        Uri i=firebaseUser.getPhotoUrl();
+        String sn=firebaseUser.getDisplayName();
+        String se=firebaseUser.getEmail();
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
+        usr_img= (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imageView);
         txt_nav_email= (TextView) navigationView.getHeaderView(0).findViewById(R.id.txt_nav_email);
         txt_nav_username= (TextView) navigationView.getHeaderView(0).findViewById(R.id.txt_nav_username);
-        txt_nav_username.setText(firebaseUser.getDisplayName());
-        txt_nav_email.setText(firebaseUser.getEmail());
+        usr_img.setImageURI(i);
+        txt_nav_username.setText(sn);
+        txt_nav_email.setText(se);
     }
 
     @Override
