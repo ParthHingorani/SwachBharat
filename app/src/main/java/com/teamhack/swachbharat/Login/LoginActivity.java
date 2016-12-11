@@ -1,5 +1,6 @@
 package com.teamhack.swachbharat.Login;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -23,18 +24,23 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.teamhack.swachbharat.MainActivity;
+import com.teamhack.swachbharat.MyApplication;
+import com.teamhack.swachbharat.Profile.User;
 import com.teamhack.swachbharat.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
+    private static final String USER_CHILD = "User";
 
     private FirebaseAuth mAuth;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
-
+    ProgressDialog progressDialog;
     private GoogleApiClient mGoogleApiClient;
 
     @Override
@@ -99,18 +105,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (result.isSuccess()) {
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                finish();
+
             } else {
                 updateUI(null);
             }
         }
     }
 
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+    private void firebaseAuthWithGoogle(final GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
-        //showProgressDialog();
+        showProgressDialog();
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -123,10 +128,47 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Log.w(TAG, "signInWithCredential", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
+                        }else {
+                            writeUser();
                         }
-                        //hideProgressDialog();
+
                     }
                 });
+    }
+
+    private void showProgressDialog() {
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle("Logging you in");
+        progressDialog.setMessage("Loading Details. . .");
+        progressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        progressDialog.hide();
+    }
+
+    private void writeUser() {
+        User user=new User();
+        FirebaseUser firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
+        user.uid=firebaseUser.getUid();
+        user.name=firebaseUser.getDisplayName();
+        user.email=firebaseUser.getEmail();
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(USER_CHILD);
+        databaseReference.child(user.uid).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    hideProgressDialog();
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
+                }else {
+                    Toast.makeText(LoginActivity.this, "Couldn't update the database", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
     private void signIn() {

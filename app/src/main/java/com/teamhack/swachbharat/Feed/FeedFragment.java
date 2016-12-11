@@ -91,4 +91,9 @@ public class FeedFragment extends Fragment {
         return v;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        databaseReference.removeEventListener(feedListener);
+    }
 }
