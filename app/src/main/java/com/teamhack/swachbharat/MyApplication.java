@@ -1,6 +1,7 @@
 package com.teamhack.swachbharat;
 
 import com.google.firebase.database.FirebaseDatabase;
+import com.teamhack.swachbharat.Profile.User;
 
 /**
  * Created by Rishi on 09-12-2016.

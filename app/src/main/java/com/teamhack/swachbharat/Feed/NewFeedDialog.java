@@ -76,7 +76,7 @@ public class NewFeedDialog extends Dialog implements View.OnClickListener {
             feed.user.name=firebaseUser.getDisplayName();
             feed.user.email=firebaseUser.getEmail();
             feed.user.uid=firebaseUser.getUid();
-            java.text.SimpleDateFormat simpleDateFormat=new java.text.SimpleDateFormat("dd/MM/yyyy  hh:mm");
+            java.text.SimpleDateFormat simpleDateFormat=new java.text.SimpleDateFormat("dd/MM/yyyy  HH:mm");
             feed.time=simpleDateFormat.format(new Date());
             DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(FEED_CHILD);
             feed.key=databaseReference.push().getKey();

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radiogroup_share"
+        android:checkedButton="@+id/radio_bt_garbage">
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Garbage Collection Point"
+            android:id="@+id/radio_bt_garbage"/>
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Untidy Place"
+            android:id="@+id/radio_bt_untidy"/>
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="right">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:id="@+id/bt_share_dialog_cancel"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:id="@+id/bt_share_dialog_ok"/>
+
+    </LinearLayout>
+
+</LinearLayout>
