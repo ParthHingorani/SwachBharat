@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 import com.teamhack.swachbharat.Feed.FeedFragment;
 import com.teamhack.swachbharat.Login.LoginActivity;
 import com.teamhack.swachbharat.Profile.ProfileFragment;
@@ -32,14 +31,13 @@ public class MainActivity extends AppCompatActivity
     ImageView usr_img;
     TextView txt_nav_username,txt_nav_email;
     FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
         Fragment fragment= new  FeedFragment();
         transaction.replace(R.id.content_main,fragment);
