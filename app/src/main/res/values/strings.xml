@@ -11,5 +11,33 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="google_maps_key">AIzaSyAd_u0zQ5Br58HDS6ZZmEfl3AxdwSlW8uc</string>
+    
+    <!-- layout fragment start -->
+    
+    <string name="Connect">Swachh Connect</string>
+    <string name="news">NEWS</string>
+    <string name="news1"><a href="http://economictimes.indiatimes.com/topic/Swachh-Bharat-Abhiyaan">Click here to get latest news on Swatchh Bharat Abhiyan</a></string>
+    <string name="iAuth">OFFICIAL AUTHORITIES</string>
+    <string name="iAuth1"><a href="https://swachhbharat.mygov.in/">My Government</a></string>
+    <string name="iAuth2"><a href="http://sbm.gov.in/sbm/">Ministry of Drinking Water and Sanitation</a></string>
+    <string name="iAuth3"><a href="http://swachhbharaturban.gov.in">Ministry of Urban Development</a></string>
+    <string name="iAuth4"><a href="http://www.nhai.org.in/sba/overview.aspx">National Highways Authority of India</a></string>
+    <string name="iAuth5"><a href="http://inbministry.blogspot.in/p/canvas.html">Ministry of Information and Broadcasting</a></string>
+    <string name="iAuth6"><a href="http://103.7.128.243:8085/swachhvidhyalaya/">Ministry of Human Resource Development</a></string>
+    <string name="iArt">RELATED ARTICLES</string>
+    <string name="iArt1"><a href="http://www.sulabhenvis.nic.in/Database/SwachhBharatAbhiyan_7101.aspx">Swachh Bharat Abhiyan</a></string>
+    <string name="iArt2"><a href="http://www.pradhanmantriyojana.co.in/swachh-bharat-abhiyan/">Swachh Pakhwada</a></string>
+    <string name="iArt3"><a href="http://sbm.gov.in/tsc/Report_NBA/Physical/Rpt_TargetVsAch_SelectionBased.aspx">Target vs Achievement</a></string>
+    <string name="iArt4"><a href="http://www.thebetterindia.com/topics/sanitation/">Articles on Sanitation</a></string>
+    <string name="iVideo">VIDEOS ON HYGIENE</string>
+    <string name="iVideo1"><a href="https://www.youtube.com/watch?v=Zap9wSEig-Y">Hygiene and Sanitation in Hindi</a></string>
+    <string name="iVideo2"><a href="https://www.youtube.com/watch?v=gYf2iESJ2A8">Animation on Drinking Water in Hindi</a></string>
+    <string name="iVideo3"><a href="https://www.youtube.com/watch?v=DqvQqasGGQ4">Animation on Home and Surroundings in English</a></string>
+    <string name="iVideo4"><a href="https://www.youtube.com/watch?v=zou4KpufAAs">Animation on Waste Management in English</a></string>
+    <string name="iVideo5"><a href="https://www.youtube.com/watch?v=WbxnbczI3bs">Composting at Home in English</a></string>
+    <string name="follow">Join PM</string>
+    <string name="follow1"><a href="http://www.pmindia.gov.in/en/interact-with-honble-pm/">Click here to share your views with our PM Shri Narendra Modi on our mission for a cleaner India</a></string>
+
+    <!-- layout fragement end -->
 
 </resources>
