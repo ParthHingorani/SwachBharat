@@ -14,7 +14,8 @@ import com.teamhack.swachbharat.R;
  */
 public class ConnectFragment extends Fragment {
 
-
+    TextView news,a1,a2,a3,a4,a5,a6,r1,r2,r3,r4,v1,v2,v3,v4,v5,join;
+    
     public ConnectFragment() {
         // Required empty public constructor
     }
@@ -24,16 +25,8 @@ public class ConnectFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_connect, container, false);
-    }
-    
-    TextView news,a1,a2,a3,a4,a5,a6,r1,r2,r3,r4,v1,v2,v3,v4,v5,join;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        View view = inflater.inflate(R.layout.fragment_connect, container, false);
+        
         news = (TextView) findViewById(R.id.news1);
         a1 = (TextView) findViewById(R.id.iAuth1);
         a2 = (TextView) findViewById(R.id.iAuth2);
@@ -69,6 +62,8 @@ public class ConnectFragment extends Fragment {
         v4.setMovementMethod(LinkMovementMethod.getInstance());
         v5.setMovementMethod(LinkMovementMethod.getInstance());
         join.setMovementMethod(LinkMovementMethod.getInstance());
+        
+        return view;
     }
 
 }
