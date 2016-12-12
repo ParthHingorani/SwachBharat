@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.teamhack.swachbharat.Connect.ConnectFragment;
 import com.teamhack.swachbharat.Feed.FeedFragment;
 import com.teamhack.swachbharat.Login.LoginActivity;
 import com.teamhack.swachbharat.Profile.ProfileFragment;
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_statistics) {
             fragmentClass= StatisticsFragment.class;
         } else if (id == R.id.nav_connect) {
-
+            fragmentClass= ConnectFragment.class;
         } else if (id == R.id.nav_profile) {
             fragmentClass= ProfileFragment.class;
         } else if (id == R.id.nav_logout){

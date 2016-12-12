@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.teamhack.swachbharat.R;
 
@@ -26,25 +27,25 @@ public class ConnectFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_connect, container, false);
+        View v = inflater.inflate(R.layout.fragment_connect, container, false);
         
-        news = (TextView) findViewById(R.id.news1);
-        a1 = (TextView) findViewById(R.id.iAuth1);
-        a2 = (TextView) findViewById(R.id.iAuth2);
-        a3 = (TextView) findViewById(R.id.iAuth3);
-        a4 = (TextView) findViewById(R.id.iAuth4);
-        a5 = (TextView) findViewById(R.id.iAuth5);
-        a6 = (TextView) findViewById(R.id.iAuth6);
-        r1 = (TextView) findViewById(R.id.iArt1);
-        r2 = (TextView) findViewById(R.id.iArt2);
-        r3 = (TextView) findViewById(R.id.iArt3);
-        r4 = (TextView) findViewById(R.id.iArt4);
-        v1 = (TextView) findViewById(R.id.iVideo1);
-        v2 = (TextView) findViewById(R.id.iVideo2);
-        v3 = (TextView) findViewById(R.id.iVideo3);
-        v4 = (TextView) findViewById(R.id.iVideo4);
-        v5 = (TextView) findViewById(R.id.iVideo5);
-        join = (TextView) findViewById(R.id.follow1);
+        news = (TextView) v.findViewById(R.id.news1);
+        a1 = (TextView) v.findViewById(R.id.iAuth1);
+        a2 = (TextView) v.findViewById(R.id.iAuth2);
+        a3 = (TextView) v.findViewById(R.id.iAuth3);
+        a4 = (TextView) v.findViewById(R.id.iAuth4);
+        a5 = (TextView) v.findViewById(R.id.iAuth5);
+        a6 = (TextView) v.findViewById(R.id.iAuth6);
+        r1 = (TextView) v.findViewById(R.id.iArt1);
+        r2 = (TextView) v.findViewById(R.id.iArt2);
+        r3 = (TextView) v.findViewById(R.id.iArt3);
+        r4 = (TextView) v.findViewById(R.id.iArt4);
+        v1 = (TextView) v.findViewById(R.id.iVideo1);
+        v2 = (TextView) v.findViewById(R.id.iVideo2);
+        v3 = (TextView) v.findViewById(R.id.iVideo3);
+        v4 = (TextView) v.findViewById(R.id.iVideo4);
+        v5 = (TextView) v.findViewById(R.id.iVideo5);
+        join = (TextView) v.findViewById(R.id.follow1);
 
         news.setMovementMethod(LinkMovementMethod.getInstance());
         a1.setMovementMethod(LinkMovementMethod.getInstance());
@@ -64,7 +65,7 @@ public class ConnectFragment extends Fragment {
         v5.setMovementMethod(LinkMovementMethod.getInstance());
         join.setMovementMethod(LinkMovementMethod.getInstance());
         
-        return view;
+        return v;
     }
 
 }
