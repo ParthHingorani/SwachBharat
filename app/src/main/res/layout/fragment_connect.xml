@@ -5,13 +5,12 @@
     android:layout_width="match_parent"
     android:background="@android:color/holo_orange_dark"
     >
-    <!-- A CardView that contains a TextView -->
-
+  
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -25,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 card_view:cardCornerRadius="4dp">
-<LinearLayout
+<RelativeLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -49,10 +48,10 @@
                     android:textColor="#333333"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:paddingTop="20dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_below="@+id/news"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"/>
-</LinearLayout>
+</RelativeLayout>
             </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
                 android:id="@+id/card_view2"
@@ -63,7 +62,7 @@
                 android:layout_height="wrap_content"
                 card_view:cardCornerRadius="4dp"
                 android:layout_below="@+id/card_view1">
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -75,7 +74,8 @@
                     android:textColor="#000000"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:paddingTop="10dp"
+
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
@@ -88,8 +88,8 @@
                     android:textColor="#333333"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:paddingTop="20dp"
-                    android:layout_marginTop="30dp" />
+                    android:layout_below="@+id/iAuth"
+                    android:layout_marginTop="10dp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -100,8 +100,8 @@
                     android:textColor="#333333"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:paddingTop="50dp"
-                    android:layout_marginTop="30dp" />
+                    android:layout_below="@+id/iAuth1"
+                    android:layout_marginTop="10dp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -112,8 +112,8 @@
                     android:textColor="#333333"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:paddingTop="80dp"
-                    android:layout_marginTop="30dp" />
+                    android:layout_below="@+id/iAuth2"
+                    android:layout_marginTop="10dp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -124,8 +124,8 @@
                     android:textColor="#333333"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:paddingTop="110dp"
-                    android:layout_marginTop="30dp" />
+                    android:layout_below="@+id/iAuth3"
+                    android:layout_marginTop="10dp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -136,8 +136,8 @@
                     android:textColor="#333333"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:paddingTop="140dp"
-                    android:layout_marginTop="30dp" />
+                    android:layout_below="@+id/iAuth4"
+                    android:layout_marginTop="10dp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -148,10 +148,11 @@
                     android:textColor="#333333"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:paddingTop="170dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_below="@+id/iAuth5"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"/>
-</LinearLayout>
+                </RelativeLayout>
+
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -163,7 +164,9 @@
                 android:layout_height="wrap_content"
                 card_view:cardCornerRadius="4dp"
                 android:layout_below="@+id/card_view2">
-
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/iArt"
                     android:text="@string/iArt"
@@ -184,8 +187,8 @@
                     android:textColor="#333333"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:paddingTop="20dp"
-                    android:layout_marginTop="30dp" />
+                    android:layout_below="@+id/iArt"
+                    android:layout_marginTop="10dp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -196,8 +199,8 @@
                     android:textColor="#333333"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:paddingTop="50dp"
-                    android:layout_marginTop="30dp" />
+                    android:layout_below="@+id/iArt1"
+                    android:layout_marginTop="10dp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -208,8 +211,8 @@
                     android:textColor="#333333"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:paddingTop="80dp"
-                    android:layout_marginTop="30dp" />
+                    android:layout_below="@+id/iArt2"
+                    android:layout_marginTop="10dp" />
 
             <TextView
                     android:layout_width="match_parent"
@@ -220,9 +223,10 @@
                     android:textColor="#333333"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:paddingTop="110dp"
-                    android:layout_marginTop="30dp"
+                android:layout_below="@+id/iArt3"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"/>
+</RelativeLayout>
 
             </android.support.v7.widget.CardView>
 
@@ -235,7 +239,7 @@
                 android:layout_height="wrap_content"
                 card_view:cardCornerRadius="4dp"
                 android:layout_below="@+id/card_view3">
-<LinearLayout
+<RelativeLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -259,8 +263,8 @@
                     android:textColor="#333333"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:paddingTop="20dp"
-                    android:layout_marginTop="30dp" />
+                    android:layout_below="@+id/iVideo"
+                    android:layout_marginTop="10dp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -271,8 +275,8 @@
                     android:textColor="#333333"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:paddingTop="50dp"
-                    android:layout_marginTop="30dp" />
+                    android:layout_below="@+id/iVideo1"
+                    android:layout_marginTop="10dp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -283,8 +287,8 @@
                     android:textColor="#333333"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:paddingTop="80dp"
-                    android:layout_marginTop="30dp" />
+                    android:layout_below="@+id/iVideo2"
+                    android:layout_marginTop="10dp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -295,8 +299,8 @@
                     android:textColor="#333333"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:paddingTop="110dp"
-                    android:layout_marginTop="30dp" />
+                    android:layout_below="@+id/iVideo3"
+                    android:layout_marginTop="10dp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -307,10 +311,10 @@
                     android:textColor="#333333"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:paddingTop="140dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_below="@+id/iVideo4"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"/>
-</LinearLayout>
+</RelativeLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -323,7 +327,7 @@
                 android:layout_height="wrap_content"
                 card_view:cardCornerRadius="4dp"
                 android:layout_below="@+id/card_view4">
-<LinearLayout
+<RelativeLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -347,13 +351,13 @@
                     android:textColor="#333333"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:paddingTop="20dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_below="@+id/follow"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"/>
-</LinearLayout>
+</RelativeLayout>
             </android.support.v7.widget.CardView>
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </ScrollView>
 
