@@ -1,6 +1,7 @@
 package com.teamhack.swachbharat;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.teamhack.swachbharat.Connect.ConnectFragment;
@@ -68,7 +70,7 @@ public class MainActivity extends AppCompatActivity
         usr_img= (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imageView);
         txt_nav_email= (TextView) navigationView.getHeaderView(0).findViewById(R.id.txt_nav_email);
         txt_nav_username= (TextView) navigationView.getHeaderView(0).findViewById(R.id.txt_nav_username);
-        usr_img.setImageURI(i);
+        Glide.with(this).load(i).into(usr_img).onLoadStarted(getResources().getDrawable(R.drawable.ic_account_circle_black_48dp));
         txt_nav_username.setText(sn);
         txt_nav_email.setText(se);
     }
