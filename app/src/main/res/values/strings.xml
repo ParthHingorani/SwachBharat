@@ -11,9 +11,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="google_maps_key">AIzaSyAd_u0zQ5Br58HDS6ZZmEfl3AxdwSlW8uc</string>
-    
+
     <!-- fragment_feed.xml start -->
-    
+
     <string name="Connect">Swachh Connect</string>
     <string name="news">NEWS</string>
     <string name="news1"><a href="http://economictimes.indiatimes.com/topic/Swachh-Bharat-Abhiyaan">Click here to get latest news on Swachh Bharat Abhiyan</a></string>
@@ -39,15 +39,28 @@
     <string name="follow1"><a href="http://www.pmindia.gov.in/en/interact-with-honble-pm/">Click here to share your views with our PM Shri Narendra Modi on our mission for a cleaner India</a></string>
 
     <!-- fragment_feed.xml end -->
-    
+
     <!-- dialog_new_feed.xml start -->
-    
+
     <string name="Post">Post</string>
     <string name="Cancel">Cancel</string>
     <string name="feedContent">Content</string>
     <string name="feedTitle">Title</string>
     <string name="newPost">Create a New Post</string>
-    
+
     <!-- dialog_new_feed.xml end -->
+
+    <!-- dialog_social.xml start -->
+
+    <string name="iWantTo">I want to...</string>
+    <string name="RadioButton1">conduct a meeting</string>
+    <string name="RadioButton2">launch a mission</string>
+    <string name="RadioButton3">organize a rally</string>
+    <string name="RadioButton4">host a seminar</string>
+    <string name="RadioButton5">clean a public place</string>
+    <string name="details">Details</string>
+
+    <!-- dialog_social.xml end -->
+
 
 </resources>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp">
+
+    <TextView
+        android:text="@string/iWantTo"
+        android:textSize="20sp"
+        android:textColor="@color/textPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/socialTop" />
+
+    <RadioButton
+        android:text="@string/RadioButton1"
+        android:textColor="@color/textSecondary"
+        android:textSize="15sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioButton1" />
+
+    <RadioButton
+        android:text="@string/RadioButton2"
+        android:textColor="@color/textSecondary"
+        android:textSize="15sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioButton2" />
+
+    <RadioButton
+        android:text="@string/RadioButton3"
+        android:textColor="@color/textSecondary"
+        android:textSize="15sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioButton3" />
+
+    <RadioButton
+        android:text="@string/RadioButton4"
+        android:textColor="@color/textSecondary"
+        android:textSize="15sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioButton4" />
+
+    <RadioButton
+        android:text="@string/RadioButton5"
+        android:textColor="@color/textSecondary"
+        android:textSize="15sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioButton5" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/socialDetails"
+        android:inputType="textMultiLine"
+        android:textColor="@color/textSecondary"
+        android:textSize="15sp"
+        android:hint="@string/details"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:text="@string/Cancel"
+            android:textColor="@color/colorPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bt_feed_dialog_cancel"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"/>
+
+        <Button
+            android:text="@string/Post"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bt_feed_dialog_post"
+            android:backgroundTint="@color/colorPrimary"/>
+
+        <!-- NOTE - background tint is applicable after API 21 only -->
+    </LinearLayout>
+
+</LinearLayout>

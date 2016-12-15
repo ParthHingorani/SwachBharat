@@ -3,7 +3,6 @@ package com.teamhack.swachbharat.Feed;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -34,6 +33,7 @@ public class NewFeedDialog extends Dialog implements View.OnClickListener {
     EditText et_title,et_content;
     Button bt_post,bt_cancel;
     ProgressDialog progressDialog;
+    Button cameraButton;
 
     public NewFeedDialog(Context context) {
         super(context);
@@ -48,9 +48,11 @@ public class NewFeedDialog extends Dialog implements View.OnClickListener {
         et_content= (EditText) findViewById(R.id.et_feed_content);
         et_title= (EditText) findViewById(R.id.et_feed_title);
         bt_post= (Button) findViewById(R.id.bt_feed_dialog_post);
-        bt_cancel= (Button) findViewById(R.id.bt_feed_dialog_post);
+        bt_cancel= (Button) findViewById(R.id.bt_feed_dialog_cancel);
         bt_cancel.setOnClickListener(this);
         bt_post.setOnClickListener(this);
+
+        cameraButton = (Button) findViewById(R.id.cameraButton);
     }
 
     @Override
