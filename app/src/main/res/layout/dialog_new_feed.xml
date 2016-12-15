@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp">
 
     <TextView
         android:text="@string/newPost"
-        android:textColor="#009acd"
+        android:textColor="@color/newDialogFeed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textView"
@@ -29,16 +30,38 @@
         android:id="@+id/et_feed_content"
         android:hint="@string/feedContent" />
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:color/white"
+        android:id="@+id/clickedImage" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="end"
+        android:gravity="start"
         android:layout_marginTop="10dp">
 
         <Button
+            android:layout_width="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_height="40dp"
+            android:id="@+id/cameraButton"
+            android:background="@drawable/ic_menu_camera"
+            style="@style/Base.CardView"
+            android:backgroundTint="@color/newDialogFeed" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginTop="10dp">
+
+        <Button
             android:text="@string/Cancel"
-            android:textColor="#009acd"
+            android:textColor="@color/newDialogFeed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/bt_feed_dialog_cancel"
@@ -50,10 +73,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/bt_feed_dialog_post"
-            android:backgroundTint="#009acd" 
-            android:background="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color" />
-        
+            android:backgroundTint="@color/newDialogFeed" />
+
         <!-- NOTE - background tint is applicable after API 21 only -->
-        
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
