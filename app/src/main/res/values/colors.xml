@@ -4,6 +4,10 @@
     <color name="colorPrimary">#d2020e</color>
     <color name="colorPrimaryDark">#d2020e</color>
     <color name="colorAccent">#d2020e</color>
+    <color name="textPrimary">#000000</color>
+    <color name="textSecondary">#333333</color>
+    <color name="white">#FFFFFF</color>
+    <color name="newDialogFeed">#009acd</color>
 
 </resources>
 <!--
