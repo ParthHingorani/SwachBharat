@@ -12,6 +12,7 @@ public class Feed {
     String content;
     String key;
     String time;
+    String imgurl;
     User user;
 
     public void setTitle(String title) {
@@ -28,6 +29,10 @@ public class Feed {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public void setImgurl(String imgurl) {
+        this.imgurl = imgurl;
     }
 
     public void setUser(User user) {
@@ -48,6 +53,10 @@ public class Feed {
 
     public String getTime() {
         return time;
+    }
+
+    public String getImgurl() {
+        return imgurl;
     }
 
     public User getUser() {

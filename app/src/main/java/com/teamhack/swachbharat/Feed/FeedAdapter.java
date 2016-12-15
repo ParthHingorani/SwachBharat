@@ -6,9 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.teamhack.swachbharat.R;
 
 import java.util.List;
@@ -36,7 +38,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder>{
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.setData(feedList.get(position));
+        holder.setData(feedList.get(getItemCount()-position-1));
     }
 
     @Override
@@ -51,6 +53,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder>{
         TextView txt_content;
         TextView txt_author;
         TextView txt_time;
+        ImageView img_feed;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -59,15 +62,22 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder>{
             txt_content= (TextView) itemView.findViewById(R.id.txt_feed_content);
             txt_author= (TextView) itemView.findViewById(R.id.txt_feed_author);
             txt_time= (TextView) itemView.findViewById(R.id.txt_feed_timestamp);
+            img_feed= (ImageView) itemView.findViewById(R.id.img_feed_item);
         }
 
         public void setData(final Feed data){
-            cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(context, "Title: "+data.title, Toast.LENGTH_SHORT).show();
-                }
-            });
+//            cardView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Toast.makeText(context, "Title: "+data.title, Toast.LENGTH_SHORT).show();
+//                }
+//            });
+            if(data.imgurl.contentEquals("NIL")){
+                img_feed.setVisibility(View.GONE);
+            }else {
+                img_feed.setVisibility(View.VISIBLE);
+                Glide.with(context).load(data.imgurl).into(img_feed);
+            }
             txt_title.setText(data.title);
             txt_content.setText(data.content);
             txt_author.setText(data.user.name);
