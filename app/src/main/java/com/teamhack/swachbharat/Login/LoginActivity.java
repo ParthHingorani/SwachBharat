@@ -106,7 +106,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (result.isSuccess()) {
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
-                finish();
             } else {
                 updateUI(null);
             }
@@ -163,6 +162,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if(task.isSuccessful()){
                     hideProgressDialog();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
                 }else {
                     Toast.makeText(LoginActivity.this, "Couldn't update the database", Toast.LENGTH_SHORT).show();
                 }
