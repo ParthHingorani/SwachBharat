@@ -3,6 +3,15 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:text="@string/iWantToMark"
+        android:textSize="20sp"
+        android:textColor="@color/textPrimary"
+        android:layout_marginLeft="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/shareTop" />
+
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -11,13 +20,27 @@
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Garbage Collection Point"
+            android:text="@string/radio1"
+            android:textColor="@color/textSecondary"
             android:id="@+id/radio_bt_garbage"/>
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Untidy Place"
+            android:text="@string/radio2"
+            android:textColor="@color/textSecondary"
             android:id="@+id/radio_bt_untidy"/>
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/radio3"
+            android:textColor="@color/textSecondary"
+            android:id="@+id/radio_bt_unclean"/>
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/radio4"
+            android:textColor="@color/textSecondary"
+            android:id="@+id/radio_bt_manhole"/>
     </RadioGroup>
 
     <LinearLayout
@@ -28,14 +51,16 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel"
+            android:text="@string/Cancel"
+            android:textColor="@color/colorAccent"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:id="@+id/bt_share_dialog_cancel"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="OK"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/colorAccent"
             android:id="@+id/bt_share_dialog_ok"/>
 
     </LinearLayout>
