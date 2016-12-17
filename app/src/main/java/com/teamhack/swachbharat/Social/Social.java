@@ -8,11 +8,13 @@ import com.teamhack.swachbharat.Profile.User;
 
 public class Social {
 
-    private String latitude;
-    private String longitude;
-    private String category;
-    private String time;
-    private User user;
+    String latitude;
+    String longitude;
+    String category;
+    String time;
+    User user;
+    String socialDetail;
+    String key;
 
     public void setLatitude(String latitude) {
         this.latitude = latitude;
@@ -34,6 +36,14 @@ public class Social {
         this.user = user;
     }
 
+    public void setSocailDetail(String title) {
+        this.socialDetail = socialDetail;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
     public String getLatitude() {
         return latitude;
     }
@@ -48,6 +58,14 @@ public class Social {
 
     public String getTime() {
         return time;
+    }
+
+    public String getSocialDetail() {
+        return socialDetail;
+    }
+
+    public String getKey() {
+        return key;
     }
 
     public User getUser() {

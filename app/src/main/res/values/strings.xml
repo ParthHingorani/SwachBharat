@@ -17,7 +17,7 @@
 
     <string name="Connect">Swachh Connect</string>
     <string name="news">NEWS</string>
-    <string name="news1"><a href="http://economictimes.indiatimes.com/topic/Swachh-Bharat-Abhiyaan">Click here to get latest news on Swachh Bharat Abhiyan</a></string>
+    <string name="news1"><a href="http://economictimes.indiatimes.com/topic/Swachh-Bharat-Abhiyaan">Get latest news on Swachh Bharat Abhiyan</a></string>
     <string name="iAuth">OFFICIAL AUTHORITIES</string>
     <string name="iAuth1"><a href="https://swachhbharat.mygov.in/">My Government</a></string>
     <string name="iAuth2"><a href="http://sbm.gov.in/sbm/">Ministry of Drinking Water and Sanitation</a></string>
@@ -37,7 +37,7 @@
     <string name="iVideo4"><a href="https://www.youtube.com/watch?v=zou4KpufAAs">Animation on Waste Management in English</a></string>
     <string name="iVideo5"><a href="https://www.youtube.com/watch?v=WbxnbczI3bs">Composting at Home in English</a></string>
     <string name="follow">Join PM</string>
-    <string name="follow1"><a href="http://www.pmindia.gov.in/en/interact-with-honble-pm/">Click here to share your views with our PM Shri Narendra Modi on our mission for a cleaner India</a></string>
+    <string name="follow1"><a href="http://www.pmindia.gov.in/en/interact-with-honble-pm/">Share your views with our PM Shri Narendra Modi on our mission for a cleaner India</a></string>
 
     <!-- fragment_feed.xml end -->
 

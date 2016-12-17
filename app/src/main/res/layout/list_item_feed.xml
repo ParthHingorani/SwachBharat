@@ -27,7 +27,7 @@
                 android:id="@+id/txt_feed_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Finally Swach Bharat App Launched"
+                android:text="Finally Swachh Bharat App Launched"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textSize="18sp"
                 android:textStyle="normal|bold" />
