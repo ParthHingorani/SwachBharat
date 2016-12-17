@@ -66,6 +66,7 @@ public class ProfileFragment extends Fragment {
         txt_locations= (TextView) v.findViewById(R.id.txt_no_of_locations);
         txt_no_post= (TextView) v.findViewById(R.id.txt_no_post);
         rv_my_posts= (RecyclerView) v.findViewById(R.id.rv_my_posts);
+        txt_user.setText(firebaseUser.getDisplayName());
         Glide.with(getActivity()).load(firebaseUser.getPhotoUrl()).into(img_user);
         myPostReference= FirebaseDatabase.getInstance().getReference().child(FEED_CHILD);
         myPostListener=new ValueEventListener() {
