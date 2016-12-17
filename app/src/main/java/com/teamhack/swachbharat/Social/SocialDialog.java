@@ -52,8 +52,8 @@ public class SocialDialog extends Dialog implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_social);
-        bt_post= (Button) findViewById(R.id.bt_feed_dialog_post);
-        bt_cancel= (Button) findViewById(R.id.bt_feed_dialog_cancel);
+        bt_post= (Button) findViewById(R.id.postSocial);
+        bt_cancel= (Button) findViewById(R.id.cancelSocial);
         radiogroup= (RadioGroup) findViewById(R.id.radiogroup_share);
         detail= (EditText) findViewById(R.id.socialDetails);
         bt_cancel.setOnClickListener(this);
@@ -64,10 +64,10 @@ public class SocialDialog extends Dialog implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.bt_feed_dialog_post:
+            case R.id.postSocial:
                 writeSocial();
                 break;
-            case R.id.bt_feed_dialog_cancel:
+            case R.id.cancelSocial:
                 dismiss();
                 break;
         }
@@ -123,17 +123,7 @@ public class SocialDialog extends Dialog implements View.OnClickListener {
             social.user.email = firebaseUser.getEmail();
             social.user.uid = firebaseUser.getUid();
 
-            socialReference.push().setValue(social).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    hideProgressBar();
-                    if(task.isSuccessful()){
-                        insertIntoDB();
-                    }else {
-                        Toast.makeText(context, ""+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+            insertIntoDB();
         }
     }
 

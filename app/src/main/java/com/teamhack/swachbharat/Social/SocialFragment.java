@@ -17,9 +17,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.teamhack.swachbharat.Feed.Feed;
-import com.teamhack.swachbharat.Feed.FeedAdapter;
-import com.teamhack.swachbharat.Feed.NewFeedDialog;
 import com.teamhack.swachbharat.R;
 
 import java.util.ArrayList;
@@ -31,14 +28,14 @@ import java.util.List;
 public class SocialFragment extends Fragment {
 
     RecyclerView rv_feed;
-    FeedAdapter feedAdapter;
-    List<Feed> feedList;
+    SocialAdapter socialAdapter;
+    List<Social> feedList;
     LinearLayoutManager linearLayoutManager;
     private DatabaseReference databaseReference;
     ValueEventListener feedListener;
-    final static String FEED_CHILD="Feed";
+    final static String SOCIAL_CHILD="Social";
     ProgressDialog progressDialog;
-    NewFeedDialog newFeedDialog;
+    SocialDialog socialDialog;
 
     public SocialFragment() {
         // Required empty public constructor
@@ -48,26 +45,26 @@ public class SocialFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v= inflater.inflate(R.layout.fragment_feed, container, false);
+        View v= inflater.inflate(R.layout.fragment_social, container, false);
         progressDialog=new ProgressDialog(getActivity());
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Loading . . .");
         progressDialog.show();
-        rv_feed= (RecyclerView) v.findViewById(R.id.rv_feed);
+        rv_feed= (RecyclerView) v.findViewById(R.id.recyclerView);
         feedList=new ArrayList<>();
-        feedAdapter=new FeedAdapter(getActivity(),feedList);
+        socialAdapter = new SocialAdapter(getActivity(),feedList);
         linearLayoutManager=new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
-        rv_feed.setAdapter(feedAdapter);
+        rv_feed.setAdapter(socialAdapter);
         rv_feed.setLayoutManager(linearLayoutManager);
-        databaseReference= FirebaseDatabase.getInstance().getReference().child(FEED_CHILD);
+        databaseReference= FirebaseDatabase.getInstance().getReference().child(SOCIAL_CHILD);
         feedListener=new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 feedList.clear();
                 for(DataSnapshot feedSnapshot:dataSnapshot.getChildren()){
-                    feedList.add(feedSnapshot.getValue(Feed.class));
-                    feedAdapter.notifyDataSetChanged();
+                    feedList.add(feedSnapshot.getValue(Social.class));
+                    socialAdapter.notifyDataSetChanged();
                 }
                 progressDialog.hide();
             }
@@ -79,12 +76,12 @@ public class SocialFragment extends Fragment {
             }
         };
         databaseReference.addValueEventListener(feedListener);
-        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab_new_feed);
+        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab_social);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                newFeedDialog=new NewFeedDialog(getActivity());
-                newFeedDialog.show();
+                socialDialog = new SocialDialog(getActivity());
+                socialDialog.show();
             }
         });
         return v;

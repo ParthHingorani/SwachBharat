@@ -19,7 +19,8 @@
             android:text="First post of Social"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textSize="20sp"
-            android:textStyle="normal" />
+            android:textStyle="normal"
+            android:textColor="@color/textPrimary"/>
 
         <TextView
             android:id="@+id/timestamp"
@@ -36,6 +37,14 @@
             android:layout_marginRight="10dp"
             android:text="By Partha"
             android:textSize="12sp" />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/postDetails"
+            android:textSize="17sp"
+            android:textColor="@color/textSecondary"/>
 
         <fragment
             xmlns:tools="http://schemas.android.com/tools"
