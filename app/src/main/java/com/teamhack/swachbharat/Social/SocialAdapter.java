@@ -29,8 +29,10 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.MyViewHold
     }
 
     @Override
-    public SocialAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new SocialAdapter.MyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_social, parent, false));
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_social, parent, false);
+        SocialAdapter.MyViewHolder holder = new SocialAdapter.MyViewHolder(view);
+        return holder;
     }
 
     @Override
