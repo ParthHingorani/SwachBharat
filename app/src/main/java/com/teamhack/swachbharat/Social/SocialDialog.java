@@ -54,7 +54,7 @@ public class SocialDialog extends Dialog implements View.OnClickListener {
         setContentView(R.layout.dialog_social);
         bt_post= (Button) findViewById(R.id.postSocial);
         bt_cancel= (Button) findViewById(R.id.cancelSocial);
-        radiogroup= (RadioGroup) findViewById(R.id.radiogroup_share);
+        radiogroup= (RadioGroup) findViewById(R.id.radioGroupSocial);
         detail= (EditText) findViewById(R.id.socialDetails);
         bt_cancel.setOnClickListener(this);
         bt_post.setOnClickListener(this);
