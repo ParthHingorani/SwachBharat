@@ -33,7 +33,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txt_profile_username"
-                    android:text="Rishi Sharma"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                     android:textStyle="normal|bold" />
             </LinearLayout>
@@ -47,14 +46,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txt_no_of_post"
-                    android:text="Number of posts: 5"
                     android:padding="10dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txt_no_of_locations"
-                    android:text="Number of locations marked by you: 5"
                     android:padding="10dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
             </LinearLayout>
@@ -96,7 +93,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/rv_my_posts"
-                            android:layout_margin="5dp"></android.support.v7.widget.RecyclerView>
+                            android:layout_margin="5dp"/>
                     </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>

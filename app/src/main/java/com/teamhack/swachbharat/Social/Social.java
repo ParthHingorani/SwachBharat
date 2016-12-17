@@ -8,11 +8,11 @@ import com.teamhack.swachbharat.Profile.User;
 
 public class Social {
 
-    String latitude;
-    String longitude;
-    String category;
-    String time;
-    User user;
+    private String latitude;
+    private String longitude;
+    private String category;
+    private String time;
+    private User user;
 
     public void setLatitude(String latitude) {
         this.latitude = latitude;
