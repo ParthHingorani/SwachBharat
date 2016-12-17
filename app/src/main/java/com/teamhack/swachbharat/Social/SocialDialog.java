@@ -18,7 +18,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.teamhack.swachbharat.Profile.User;
@@ -117,7 +116,7 @@ public class SocialDialog extends Dialog implements View.OnClickListener {
             social.category=getCategory();
             social.socialDetail=detail.getText().toString();
             java.text.SimpleDateFormat simpleDateFormat=new java.text.SimpleDateFormat("dd/MM/yyyy  HH:mm");
-            social.time - simpleDateFormat.format(new Date());
+            social.time = simpleDateFormat.format(new Date());
 
             social.user = new User();
             social.user.name = firebaseUser.getDisplayName();
