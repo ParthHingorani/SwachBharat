@@ -71,7 +71,7 @@
 
         <Button
             android:text="@string/Cancel"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorAccent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/bt_feed_dialog_cancel"
@@ -83,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/bt_feed_dialog_post"
-            android:backgroundTint="@color/colorPrimary"/>
+            android:backgroundTint="@color/colorAccent"/>
 
         <!-- NOTE - background tint is applicable after API 21 only -->
     </LinearLayout>

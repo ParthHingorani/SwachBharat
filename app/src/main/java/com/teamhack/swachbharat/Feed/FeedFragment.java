@@ -82,9 +82,6 @@ public class FeedFragment extends Fragment {
             public void onClick(View view) {
                 newFeedDialog=new NewFeedDialog(getActivity());
                 newFeedDialog.show();
-
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
             }
         });
         return v;
@@ -95,4 +92,5 @@ public class FeedFragment extends Fragment {
         super.onDestroyView();
         databaseReference.removeEventListener(feedListener);
     }
+
 }

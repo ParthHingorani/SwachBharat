@@ -1,7 +1,6 @@
 package com.teamhack.swachbharat;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -12,7 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.teamhack.swachbharat.Connect.ConnectFragment;
 import com.teamhack.swachbharat.Feed.FeedFragment;
+import com.teamhack.swachbharat.Feed.NewFeedDialog;
 import com.teamhack.swachbharat.Login.LoginActivity;
 import com.teamhack.swachbharat.Profile.ProfileFragment;
 import com.teamhack.swachbharat.Share.ShareFragment;
@@ -31,9 +30,11 @@ import com.teamhack.swachbharat.Statistics.StatisticsFragment;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    static final int REQUEST_IMAGE_CAPTURE = 1;
     ImageView usr_img;
     TextView txt_nav_username,txt_nav_email;
     FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
+    static String feedTitle,feedContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-
+    */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -150,5 +151,20 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            NewFeedDialog newFeedDialog=new NewFeedDialog(MainActivity.this);
+            newFeedDialog.show();
+            newFeedDialog.setData(feedTitle,feedContent,data);
+        }
+    }
+
+    public static void saveFeedDialogState(String title, String content){
+        feedTitle=new String(title);
+        feedContent=new String(content);
     }
 }
