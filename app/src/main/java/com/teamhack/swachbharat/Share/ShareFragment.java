@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -61,8 +62,32 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback{
                     Share s=shareSnapshot.getValue(Share.class);
                     if(shareList.isEmpty() || !shareList.contains(s)){
                         shareList.add(s);
-                        googleMap.addMarker(new MarkerOptions().title(s.category)
-                                .position(new LatLng(Double.parseDouble(s.latitude),Double.parseDouble(s.longitude))));
+                        switch (s.category){
+                            case "Garbage Collection Point":
+                            case "A garbage collection point":
+                                googleMap.addMarker(new MarkerOptions().title(s.category)
+                                        .position(new LatLng(Double.parseDouble(s.latitude),Double.parseDouble(s.longitude)))
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.dustbin)));
+                                break;
+                            case "An open manhole":
+                                googleMap.addMarker(new MarkerOptions().title(s.category)
+                                        .position(new LatLng(Double.parseDouble(s.latitude),Double.parseDouble(s.longitude)))
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.manhole)));
+                                break;
+                            case "Untidy Place":
+                            case "An untidy place":
+                            case "A location which is never cleaned":
+                                googleMap.addMarker(new MarkerOptions().title(s.category)
+                                        .position(new LatLng(Double.parseDouble(s.latitude),Double.parseDouble(s.longitude)))
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.broom)));
+                                break;
+                            default:
+                                googleMap.addMarker(new MarkerOptions().title(s.category)
+                                        .position(new LatLng(Double.parseDouble(s.latitude),Double.parseDouble(s.longitude))));
+                                break;
+                        }
+//                        googleMap.addMarker(new MarkerOptions().title(s.category)
+//                                .position(new LatLng(Double.parseDouble(s.latitude),Double.parseDouble(s.longitude))));
                     }
                 }
             }
