@@ -32,6 +32,7 @@
                 android:id="@+id/usr_list_stats"
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
+                android:minHeight="230dp"
                 android:layout_margin="12dp"
                 android:padding="3dp"
                 android:nestedScrollingEnabled="true"
@@ -124,7 +125,8 @@
             <ListView
                 android:id="@+id/best_ngo_list_stats"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="230dp"
+                android:minHeight="230dp"
                 android:layout_margin="12dp"
                 android:padding="3dp"
                 android:nestedScrollingEnabled="true"
@@ -155,7 +157,8 @@
             <ListView
                 android:id="@+id/loc_activity_list_stats"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="230dp"
+                android:minHeight="230dp"
                 android:layout_margin="12dp"
                 android:padding="3dp"
                 android:nestedScrollingEnabled="true"
@@ -186,7 +189,8 @@
             <ListView
                 android:id="@+id/task_list_stats"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="230dp"
+                android:minHeight="230dp"
                 android:layout_margin="12dp"
                 android:padding="3dp"
                 android:nestedScrollingEnabled="true"
@@ -217,7 +221,8 @@
             <ListView
                 android:id="@+id/active_usr_list_stats"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="230dp"
+                android:minHeight="230dp"
                 android:layout_margin="12dp"
                 android:padding="3dp"
                 android:nestedScrollingEnabled="true"

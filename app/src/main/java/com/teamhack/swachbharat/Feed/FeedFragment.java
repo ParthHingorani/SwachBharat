@@ -4,7 +4,6 @@ package com.teamhack.swachbharat.Feed;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -75,6 +74,7 @@ public class FeedFragment extends Fragment {
                 Toast.makeText(getActivity(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         };
+
         databaseReference.addValueEventListener(feedListener);
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab_new_feed);
         fab.setOnClickListener(new View.OnClickListener() {

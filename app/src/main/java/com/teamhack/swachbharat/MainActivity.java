@@ -14,11 +14,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.teamhack.swachbharat.Connect.ConnectFragment;
+import com.teamhack.swachbharat.Feed.Feed;
 import com.teamhack.swachbharat.Feed.FeedFragment;
 import com.teamhack.swachbharat.Feed.NewFeedDialog;
 import com.teamhack.swachbharat.Login.LoginActivity;
@@ -34,6 +41,9 @@ public class MainActivity extends AppCompatActivity
     ImageView usr_img;
     TextView txt_nav_username,txt_nav_email;
     FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
+    DatabaseReference myPostReference,postreference;
+    ValueEventListener myPostListener;
+    int no_of_posts;
     static String feedTitle,feedContent;
 
     @Override
@@ -74,6 +84,30 @@ public class MainActivity extends AppCompatActivity
         Glide.with(this).load(i).into(usr_img).onLoadStarted(getResources().getDrawable(R.drawable.ic_account_circle_black_48dp));
         txt_nav_username.setText(sn);
         txt_nav_email.setText(se);
+
+        firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
+        myPostReference= FirebaseDatabase.getInstance().getReference().child("Feed");
+        postreference= FirebaseDatabase.getInstance().getReference().child("User");
+        myPostListener=new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                no_of_posts=0;
+                for(DataSnapshot feedSnapshot:dataSnapshot.getChildren()){
+                    Feed f=feedSnapshot.getValue(Feed.class);
+                    if(f.getUser().uid.contentEquals(firebaseUser.getUid())){
+                        no_of_posts++;
+                        postreference.child(firebaseUser.getUid()).child("posts").setValue(no_of_posts);
+                    }
+                }
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getParent(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        };
+        myPostReference.addValueEventListener(myPostListener);
+
     }
 
     @Override

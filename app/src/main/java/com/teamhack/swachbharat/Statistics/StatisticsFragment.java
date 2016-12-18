@@ -10,7 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.teamhack.swachbharat.R;
 
 import java.util.ArrayList;
@@ -23,8 +27,10 @@ import java.util.List;
 
 public class StatisticsFragment extends Fragment {
 
+    DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
     public View rv;
-    public static ArrayAdapter<String> usr_ad, loc_ad, loc_activity_ad, best_ngo_ad, best_usr_ad, task_ad, usr_active_ad;
+    public static ArrayAdapter<String> loc_ad, loc_activity_ad, best_ngo_ad, best_usr_ad, task_ad, usr_active_ad;
+
     String[] dummy_data =
             {
                     "Dummy Data 1",
@@ -111,27 +117,44 @@ public class StatisticsFragment extends Fragment {
         setListViewHeightBasedOnChildren(task_listView);
     }
 
-    public void usr_setdata()
-    {
-        ListView usr_listView = (ListView) rv.findViewById(R.id.usr_list_stats);
-        usr_ad=setdata(getActivity(),R.layout.stats_item_usr,R.id.txt_usr_title,data_list);
-        usr_listView.setAdapter(usr_ad);
-        setListViewHeightBasedOnChildren(usr_listView);
-    }
-
     public void usr_active_setdata()
     {
+        ListAdapter adapter = new ReverseFirebaseListAdapter<UserActive>(getActivity(), UserActive.class, R.layout.stats_item_usr_active, databaseReference.child("User").orderByChild("posts")) {
+
+            @Override
+            protected void populateView(View view, UserActive userActive, int position) {
+                TextView title= (TextView)view.findViewById(R.id.txt_usr_active_title);
+                TextView posts= (TextView)view.findViewById(R.id.txt_usr_active_posts);
+                posts.setText("" + userActive.getPosts());
+                title.setText(userActive.getName());
+            }
+        };
         ListView usr_active_listview = (ListView) rv.findViewById(R.id.active_usr_list_stats);
-        usr_active_ad=setdata(getActivity(),R.layout.stats_item_usr_active,R.id.txt_usr_active_title,data_list);
-        usr_active_listview.setAdapter(usr_active_ad);
+        usr_active_listview.setAdapter(adapter);
         setListViewHeightBasedOnChildren(usr_active_listview);
+    }
+
+    public void usr_setdata()
+    {
+        ListAdapter adapter = new FirebaseListAdapter<User>(getActivity(), User.class, R.layout.stats_item_usr, databaseReference.child("User").orderByKey()) {
+
+            @Override
+            protected void populateView(View view, User user, int position) {
+
+                TextView title= (TextView)view.findViewById(R.id.txt_usr_title);
+                title.setText(user.getName());
+            }
+        };
+
+        ListView usr_listView = (ListView) rv.findViewById(R.id.usr_list_stats);
+        usr_listView.setAdapter(adapter);
+        setListViewHeightBasedOnChildren(usr_listView);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         View rootView=inflater.inflate(R.layout.fragment_statistics, container, false);
         rv=rootView;
 

@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.teamhack.swachbharat"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -17,6 +17,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
     }
 }
 
@@ -39,5 +42,6 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.google.android.gms:play-services-maps:10.0.1'
     compile 'com.google.firebase:firebase-storage:10.0.1'
+    compile 'com.firebaseui:firebase-ui:1.0.1'
 }
 apply plugin: 'com.google.gms.google-services'

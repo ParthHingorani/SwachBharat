@@ -13,8 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -79,7 +77,7 @@ public class ProfileFragment extends Fragment {
                         feedList.add(f);
                         feedAdapter.notifyDataSetChanged();
                         no_of_posts++;
-                        txt_posts.setText("Numebr of posts posted by you: "+no_of_posts);
+                        txt_posts.setText("Number of posts posted by you: "+no_of_posts);
                         txt_no_post.setVisibility(View.INVISIBLE);
                     }
                 }
