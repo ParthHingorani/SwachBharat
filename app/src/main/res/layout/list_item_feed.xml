@@ -13,9 +13,11 @@
 
         <ImageView
             android:id="@+id/img_feed_item"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center|center_horizontal" />
+            android:minHeight="150dp"
+            android:layout_gravity="center|center_horizontal"
+            android:scaleType="fitXY" />
 
         <LinearLayout
             android:layout_width="match_parent"

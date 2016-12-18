@@ -45,14 +45,14 @@
             android:id="@+id/postDetails"
             android:textSize="17sp"
             android:textColor="@color/textSecondary"/>
-
+<!--
         <fragment
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/myLocation"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="100dp" />
-
+-->
     </LinearLayout>
 
 
