@@ -13,6 +13,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/socialTop" />
 
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioGroupSocial">
+
     <RadioButton
         android:text="@string/RadioButton1"
         android:textColor="@color/textSecondary"
@@ -52,6 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/radioButton5" />
+    </RadioGroup>
 
     <EditText
         android:layout_width="match_parent"
@@ -74,7 +80,7 @@
             android:textColor="@color/colorAccent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/bt_feed_dialog_cancel"
+            android:id="@+id/cancelSocial"
             style="@style/Base.Widget.AppCompat.Button.Borderless"/>
 
         <Button
@@ -82,7 +88,7 @@
             android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/bt_feed_dialog_post"
+            android:id="@+id/postSocial"
             android:backgroundTint="@color/colorAccent"/>
 
         <!-- NOTE - background tint is applicable after API 21 only -->
