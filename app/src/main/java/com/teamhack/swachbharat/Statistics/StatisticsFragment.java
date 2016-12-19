@@ -13,8 +13,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.teamhack.swachbharat.R;
 import com.teamhack.swachbharat.Share.Share;
 
@@ -30,6 +33,7 @@ public class StatisticsFragment extends Fragment {
 
     DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
     public View rv;
+    int taken,completed;
     public static ArrayAdapter<String> loc_activity_ad;
     String ngo = "NGO", individual = "Individual";
 
@@ -45,6 +49,58 @@ public class StatisticsFragment extends Fragment {
 
     public StatisticsFragment() {
         // Required empty public constructor
+    }
+
+    public int taskTaken(final User user)
+    {
+        DatabaseReference takenReference= FirebaseDatabase.getInstance().getReference().child("Share");
+        ValueEventListener takenEventListener = takenReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                taken=0;
+                for(DataSnapshot shareSnapshot: dataSnapshot.getChildren())
+                {
+                    Share s=shareSnapshot.getValue(Share.class);
+                    if(s.getTakenBy()!=null&&s.getTakenBy().uid.contentEquals(user.getUid())&&s.getStatus().contentEquals("Taken"))
+                    {
+                        taken++;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        //takenReference.removeEventListener(takenEventListener);
+        return taken;
+    }
+
+    public int taskCompleted(final User user)
+    {
+        DatabaseReference completedReference= FirebaseDatabase.getInstance().getReference().child("Share");
+        ValueEventListener completedEventListener = completedReference.addValueEventListener(new ValueEventListener(){
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                completed=0;
+                for(DataSnapshot shareSnapshot: dataSnapshot.getChildren())
+                {
+                    Share s=shareSnapshot.getValue(Share.class);
+                    if(s.getTakenBy()!=null&&s.getTakenBy().uid.contentEquals(user.getUid())&&s.getStatus().contentEquals("Completed"))
+                    {
+                        completed++;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        //completedReference.removeEventListener(completedEventListener);
+        return completed;
     }
 
     public static void setListViewHeightBasedOnChildren(ListView listView) {
@@ -67,6 +123,8 @@ public class StatisticsFragment extends Fragment {
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
     }
+
+
 
     public ArrayAdapter<String> setdata(Context context, int xml, int id, List<String> list)
     {
@@ -91,11 +149,11 @@ public class StatisticsFragment extends Fragment {
             @Override
             protected void populateView(View view, User user, int position) {
 
-                if (user.type.contentEquals(ngo))
+                if (user.getType().contentEquals(ngo))
                 {
                     TextView title= (TextView)view.findViewById(R.id.txt_best_ngo_title);
                     TextView completed=(TextView)view.findViewById(R.id.txt_best_ngo_completed);
-                    completed.setText("Completed Tasks : " + user.getCompleted());
+                    completed.setText("Completed Tasks : " + taskCompleted(user));
                     title.setText(user.getName());
                 }
             }
@@ -117,11 +175,11 @@ public class StatisticsFragment extends Fragment {
             @Override
             protected void populateView(View view, User user, int position) {
 
-                if (user.type.contentEquals(individual))
+                if (user.getType().contentEquals(individual))
                 {
                     TextView title= (TextView)view.findViewById(R.id.txt_best_usr_title);
                     TextView completed=(TextView)view.findViewById(R.id.txt_best_usr_completed);
-                    completed.setText("Completed Tasks : " + user.getCompleted());
+                    completed.setText("Completed Tasks : " + taskCompleted(user));
                     title.setText(user.getName());
                 }
             }
@@ -233,13 +291,13 @@ public class StatisticsFragment extends Fragment {
 
             @Override
             protected void populateView(View view, User user, int position) {
-                if(user.type.contentEquals(individual))
+                if(user.getType().contentEquals(individual))
                 {
                     TextView title= (TextView)view.findViewById(R.id.txt_usr_title);
                     TextView taken=(TextView)view.findViewById(R.id.txt_usr_taken);
                     TextView completed=(TextView)view.findViewById(R.id.txt_usr_completed);
-                    taken.setText("Tasks Taken : " + user.getTaken());
-                    completed.setText("Tasks Completed : " + user.getCompleted());
+                    taken.setText("Tasks Taken : " + taskTaken(user));
+                    completed.setText("Tasks Completed : " + taskCompleted(user));
                     title.setText(user.getName());
                 }
             }
