@@ -75,14 +75,17 @@ public class ShareDialog extends Dialog implements View.OnClickListener {
         Share share=new Share();
         share.latitude=lat;
         share.longitude=lng;
-        share.user= new User();
-        share.user.name= firebaseUser.getDisplayName();
-        share.user.email=firebaseUser.getEmail();
-        share.user.uid=firebaseUser.getUid();
+        share.status="Pending";
+        share.createdBy= new User();
+        share.createdBy.name= firebaseUser.getDisplayName();
+        share.createdBy.email=firebaseUser.getEmail();
+        share.createdBy.uid=firebaseUser.getUid();
+        share.takenBy=null;
         java.text.SimpleDateFormat simpleDateFormat=new java.text.SimpleDateFormat("dd/MM/yyyy  HH:mm");
         share.time=simpleDateFormat.format(new Date());
         share.category=getCategory();
-        shareReference.push().setValue(share).addOnCompleteListener(new OnCompleteListener<Void>() {
+        share.key=shareReference.push().getKey();
+        shareReference.child(share.key).setValue(share).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){

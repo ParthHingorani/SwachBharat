@@ -8,11 +8,18 @@ import com.teamhack.swachbharat.Profile.User;
 
 public class Share {
 
+    String key;
     String latitude;
     String longitude;
     String category;
     String time;
-    User user;
+    String status;
+    User takenBy;
+    User createdBy;
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     public void setLatitude(String latitude) {
         this.latitude = latitude;
@@ -30,8 +37,20 @@ public class Share {
         this.time = time;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setTakenBy(User takenBy) {
+        this.takenBy = takenBy;
+    }
+
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getKey() {
+        return key;
     }
 
     public String getLatitude() {
@@ -50,7 +69,15 @@ public class Share {
         return time;
     }
 
-    public User getUser() {
-        return user;
+    public String getStatus() {
+        return status;
+    }
+
+    public User getTakenBy() {
+        return takenBy;
+    }
+
+    public User getCreatedBy() {
+        return createdBy;
     }
 }

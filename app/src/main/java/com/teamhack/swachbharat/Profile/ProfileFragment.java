@@ -97,7 +97,7 @@ public class ProfileFragment extends Fragment {
                 no_of_location=0;
                 for(DataSnapshot shareSnapshot:dataSnapshot.getChildren()) {
                     Share s = shareSnapshot.getValue(Share.class);
-                    if (s.getUser().uid.contentEquals(firebaseUser.getUid())) {
+                    if (s.getCreatedBy().uid.contentEquals(firebaseUser.getUid())) {
                         no_of_location++;
                         txt_locations.setText("Number of locations marked by you: "+no_of_location);
                     }

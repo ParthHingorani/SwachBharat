@@ -13,6 +13,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,18 +23,20 @@ import com.google.firebase.database.ValueEventListener;
 import com.teamhack.swachbharat.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ShareFragment extends Fragment implements OnMapReadyCallback{
+public class ShareFragment extends Fragment implements OnMapReadyCallback,GoogleMap.OnMarkerClickListener{
 
     GoogleMap googleMap;
     List<Share> shareList;
     DatabaseReference shareReference;
     ValueEventListener shareListener;
     final static String SHARE_CHILD="Share";
+    HashMap<Marker,Share> shareMap;
 
     public ShareFragment() {
         // Required empty public constructor
@@ -43,6 +46,7 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         shareList=new ArrayList<>();
+        shareMap=new HashMap<>();
     }
 
     @Override
@@ -60,34 +64,39 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot shareSnapshot:dataSnapshot.getChildren()){
                     Share s=shareSnapshot.getValue(Share.class);
+                    Marker marker;
                     if(shareList.isEmpty() || !shareList.contains(s)){
                         shareList.add(s);
                         switch (s.category){
                             case "Garbage Collection Point":
                             case "A garbage collection point":
-                                googleMap.addMarker(new MarkerOptions().title(s.category)
+                                marker=googleMap.addMarker(new MarkerOptions().title(s.category)
                                         .position(new LatLng(Double.parseDouble(s.latitude),Double.parseDouble(s.longitude)))
                                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.dustbin)));
                                 break;
                             case "An open manhole":
-                                googleMap.addMarker(new MarkerOptions().title(s.category)
+                                marker=googleMap.addMarker(new MarkerOptions().title(s.category)
                                         .position(new LatLng(Double.parseDouble(s.latitude),Double.parseDouble(s.longitude)))
-                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.manhole)));
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.manhole))
+                                        .snippet("Status: "+s.status));
                                 break;
                             case "Untidy Place":
                             case "An untidy place":
                             case "A location which is never cleaned":
-                                googleMap.addMarker(new MarkerOptions().title(s.category)
+                                marker=googleMap.addMarker(new MarkerOptions().title(s.category)
                                         .position(new LatLng(Double.parseDouble(s.latitude),Double.parseDouble(s.longitude)))
-                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.broom)));
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.broom))
+                                        .snippet("Status: "+s.status));
                                 break;
                             default:
-                                googleMap.addMarker(new MarkerOptions().title(s.category)
-                                        .position(new LatLng(Double.parseDouble(s.latitude),Double.parseDouble(s.longitude))));
+                                marker=googleMap.addMarker(new MarkerOptions().title(s.category)
+                                        .position(new LatLng(Double.parseDouble(s.latitude),Double.parseDouble(s.longitude)))
+                                        .snippet("Status: "+s.status));
                                 break;
                         }
-//                        googleMap.addMarker(new MarkerOptions().title(s.category)
-//                                .position(new LatLng(Double.parseDouble(s.latitude),Double.parseDouble(s.longitude))));
+
+                        shareMap.put(marker,s);
+
                     }
                 }
             }
@@ -104,11 +113,25 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback{
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap=googleMap;
         shareReference.addValueEventListener(shareListener);
+        googleMap.setOnMarkerClickListener(this);
         googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng latLng) {
                 new ShareDialog(getActivity(),Double.toString(latLng.latitude),Double.toString(latLng.longitude)).show();
             }
         });
+
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        switch (marker.getTitle()){
+            case "An open manhole":
+            case "Untidy Place":
+            case "An untidy place":
+            case "A location which is never cleaned":
+                new TaskDialog(getActivity(),shareMap.get(marker)).show();
+        }
+        return false;
     }
 }
