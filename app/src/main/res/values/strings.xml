@@ -65,6 +65,9 @@
     <string name="radio4">An open manhole</string>
     <!-- dialog_share.xml end -->
 
+    <string name="radio_bt_take_task">Take Up this task !</string>
+    <string name="radio_bt_leave_task">Leave this task</string>
+
 
     <!-- activity_login.xml start -->
     <string name="madeWith">made with</string>

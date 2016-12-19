@@ -125,7 +125,7 @@ public class StatisticsFragment extends Fragment {
             protected void populateView(View view, UserActive userActive, int position) {
                 TextView title= (TextView)view.findViewById(R.id.txt_usr_active_title);
                 TextView posts= (TextView)view.findViewById(R.id.txt_usr_active_posts);
-                posts.setText("" + userActive.getPosts());
+                posts.setText("Posts : " + userActive.getPosts());
                 title.setText(userActive.getName());
             }
         };
@@ -136,12 +136,17 @@ public class StatisticsFragment extends Fragment {
 
     public void usr_setdata()
     {
-        ListAdapter adapter = new FirebaseListAdapter<User>(getActivity(), User.class, R.layout.stats_item_usr, databaseReference.child("User").orderByKey()) {
+        ListAdapter adapter = new FirebaseListAdapter<User>(getActivity(), User.class, R.layout.stats_item_usr, databaseReference.child("User").orderByKey())
+        {
 
             @Override
             protected void populateView(View view, User user, int position) {
 
                 TextView title= (TextView)view.findViewById(R.id.txt_usr_title);
+                TextView taken=(TextView)view.findViewById(R.id.txt_usr_taken);
+                TextView completed=(TextView)view.findViewById(R.id.txt_usr_completed);
+                taken.setText("Tasks Taken : " + user.getTaken());
+                completed.setText("Tasks Completed : " + user.getCompleted());
                 title.setText(user.getName());
             }
         };

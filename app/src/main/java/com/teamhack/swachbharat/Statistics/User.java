@@ -10,6 +10,7 @@ public class User
         public String name;
         public String email;
         public int taken;
+        public int completed;
 
         public void setUid(String uid) {
             this.uid = uid;
@@ -44,6 +45,13 @@ public class User
         public void setTaken(int taken)
         {
             this.taken = taken;
+        }
+
+        public int getCompleted(){ return completed;}
+
+        public void setCompleted(int completed)
+        {
+            this.completed=completed;
         }
 
 }
