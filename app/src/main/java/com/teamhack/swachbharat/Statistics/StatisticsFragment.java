@@ -16,6 +16,7 @@ import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.teamhack.swachbharat.R;
+import com.teamhack.swachbharat.Share.Share;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -80,45 +81,70 @@ public class StatisticsFragment extends Fragment {
     public void best_ngo_setdata()
     {
         ListView best_ngo_listView = (ListView) rv.findViewById(R.id.best_ngo_list_stats);
+        best_ngo_listView.setAdapter(null);
+        best_ngo_listView.deferNotifyDataSetChanged();
         best_ngo_ad=setdata(getActivity(),R.layout.stats_item_best_ngo,R.id.txt_best_ngo_title,data_list);
-        best_ngo_listView.setAdapter(best_ngo_ad);
         setListViewHeightBasedOnChildren(best_ngo_listView);
+        best_ngo_listView.setAdapter(best_ngo_ad);
     }
 
     public void best_usr_setdata()
     {
         ListView best_usr_listView = (ListView) rv.findViewById(R.id.best_usr_list_stats);
+        best_usr_listView.setAdapter(null);
+        best_usr_listView.deferNotifyDataSetChanged();
         best_usr_ad=setdata(getActivity(),R.layout.stats_item_best_usr,R.id.txt_best_usr_title,data_list);
-        best_usr_listView.setAdapter(best_usr_ad);
         setListViewHeightBasedOnChildren(best_usr_listView);
+        best_usr_listView.setAdapter(best_usr_ad);
     }
 
     public void loc_setdata()
     {
         ListView loc_listView = (ListView) rv.findViewById(R.id.loc_list_stats);
-        loc_ad=setdata(getActivity(),R.layout.stats_item_loc,R.id.txt_loc_title,data_list);
-        loc_listView.setAdapter(loc_ad);
+        loc_listView.setAdapter(null);
+        loc_listView.deferNotifyDataSetChanged();
+
+        ListAdapter adapter = new FirebaseListAdapter<Share>(getActivity(), Share.class, R.layout.stats_item_loc, databaseReference.child("Share").orderByChild("time"))
+        {
+
+            @Override
+            protected void populateView(View view, Share share, int position) {
+
+                TextView title= (TextView)view.findViewById(R.id.txt_loc_title);
+                title.setText(share.getCategory());
+            }
+        };
+
         setListViewHeightBasedOnChildren(loc_listView);
+        loc_listView.setAdapter(adapter);
     }
 
     public void loc_activity_setdata()
     {
         ListView loc_activity_listView = (ListView) rv.findViewById(R.id.loc_activity_list_stats);
+        loc_activity_listView.setAdapter(null);
+        loc_activity_listView.deferNotifyDataSetChanged();
         loc_activity_ad=setdata(getActivity(),R.layout.stats_item_loc_activity,R.id.txt_loc_activity_title,data_list);
-        loc_activity_listView.setAdapter(loc_activity_ad);
         setListViewHeightBasedOnChildren(loc_activity_listView);
+        loc_activity_listView.setAdapter(loc_activity_ad);
     }
 
     public void task_setdata()
     {
         ListView task_listView = (ListView) rv.findViewById(R.id.task_list_stats);
+        task_listView.setAdapter(null);
+        task_listView.deferNotifyDataSetChanged();
         task_ad=setdata(getActivity(),R.layout.stats_item_task,R.id.txt_task_title,data_list);
-        task_listView.setAdapter(task_ad);
         setListViewHeightBasedOnChildren(task_listView);
+        task_listView.setAdapter(task_ad);
     }
 
     public void usr_active_setdata()
     {
+        ListView usr_active_listview = (ListView) rv.findViewById(R.id.active_usr_list_stats);
+        usr_active_listview.setAdapter(null);
+        usr_active_listview.deferNotifyDataSetChanged();
+
         ListAdapter adapter = new ReverseFirebaseListAdapter<UserActive>(getActivity(), UserActive.class, R.layout.stats_item_usr_active, databaseReference.child("User").orderByChild("posts")) {
 
             @Override
@@ -129,13 +155,17 @@ public class StatisticsFragment extends Fragment {
                 title.setText(userActive.getName());
             }
         };
-        ListView usr_active_listview = (ListView) rv.findViewById(R.id.active_usr_list_stats);
-        usr_active_listview.setAdapter(adapter);
+
         setListViewHeightBasedOnChildren(usr_active_listview);
+        usr_active_listview.setAdapter(adapter);
     }
 
     public void usr_setdata()
     {
+        ListView usr_listView = (ListView) rv.findViewById(R.id.usr_list_stats);
+        usr_listView.setAdapter(null);
+        usr_listView.deferNotifyDataSetChanged();
+
         ListAdapter adapter = new FirebaseListAdapter<User>(getActivity(), User.class, R.layout.stats_item_usr, databaseReference.child("User").orderByKey())
         {
 
@@ -151,9 +181,8 @@ public class StatisticsFragment extends Fragment {
             }
         };
 
-        ListView usr_listView = (ListView) rv.findViewById(R.id.usr_list_stats);
-        usr_listView.setAdapter(adapter);
         setListViewHeightBasedOnChildren(usr_listView);
+        usr_listView.setAdapter(adapter);
     }
 
     @Override
