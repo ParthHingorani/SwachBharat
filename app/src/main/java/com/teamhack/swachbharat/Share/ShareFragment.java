@@ -47,6 +47,7 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback,Google
         super.onCreate(savedInstanceState);
         shareList=new ArrayList<>();
         shareMap=new HashMap<>();
+        googleMap.
     }
 
     @Override

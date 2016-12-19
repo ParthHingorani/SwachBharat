@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -30,15 +31,13 @@ import com.teamhack.swachbharat.R;
 public class TaskDialog extends Dialog implements View.OnClickListener {
 
     private static final String SHARE_CHILD = "Share", STATUS = "status";
-    static int flag=0;
+    int flag=0;
     Button bt_ok,bt_cancel;
     Share share;
     Context context;
     ProgressDialog progressDialog;
     RadioGroup radiogroup;
     FirebaseUser firebaseUser;
-    DatabaseReference databaseReference;
-    ValueEventListener currentUserListener;
 
     public TaskDialog(Context context,Share share) {
         super(context);
@@ -47,46 +46,43 @@ public class TaskDialog extends Dialog implements View.OnClickListener {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
-        databaseReference= FirebaseDatabase.getInstance().getReference().child("Share");
-        currentUserListener=new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(share.getCreatedBy().uid.contentEquals(firebaseUser.getUid()))
-                {
-                    flag=1;
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-        databaseReference.addValueEventListener(currentUserListener);
-
+        Log.e("TaskDialog","START key:"+share.key);
+        Log.e("TaskDialog","uid1:"+share.createdBy.uid);
+        Log.e("TaskDialog","uid2:"+firebaseUser.getUid());
+        if(share.getCreatedBy().uid.matches(firebaseUser.getUid()))
+        {
+            flag=1;
+            Log.e("TaskDialog","flag=1");
+        }
+        Log.e("TaskDialog","if flag:"+flag);
         if(flag==0)
         {
             setContentView(R.layout.dialogue_task);
             bt_cancel= (Button) findViewById(R.id.bt_task_dialog_cancel);
             bt_ok= (Button) findViewById(R.id.bt_task_dialog_ok);
             radiogroup= (RadioGroup) findViewById(R.id.radiogroup_task);
-            bt_ok.setOnClickListener(this);
-            bt_cancel.setOnClickListener(this);
+            bt_ok.setOnClickListener(TaskDialog.this);
+            bt_cancel.setOnClickListener(TaskDialog.this);
         }
 
         else if(flag==1)
         {
             setContentView(R.layout.dialogue_current_user_task);
-            bt_cancel=(Button) findViewById(R.id.bt_current_user_task_dialog_cancel);
-            bt_ok=(Button) findViewById(R.id.bt_current_user_task_dialog_ok);
             radiogroup= (RadioGroup) findViewById(R.id.radiogroup_current_user_task);
-            bt_ok.setOnClickListener(this);
-            bt_cancel.setOnClickListener(this);
         }
+        bt_cancel= (Button) findViewById(R.id.bt_task_dialog_cancel);
+        bt_ok= (Button) findViewById(R.id.bt_task_dialog_ok);
+        bt_ok.setOnClickListener(TaskDialog.this);
+        bt_cancel.setOnClickListener(TaskDialog.this);
     }
 
     @Override
@@ -143,6 +139,7 @@ public class TaskDialog extends Dialog implements View.OnClickListener {
                     public void onSuccess(Void aVoid) {
                         hideProgressBar();
                         Toast.makeText(context, "Database updated", Toast.LENGTH_SHORT).show();
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
