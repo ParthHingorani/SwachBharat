@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getParent(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         };
         myPostReference.addValueEventListener(myPostListener);
@@ -200,5 +200,11 @@ public class MainActivity extends AppCompatActivity
     public static void saveFeedDialogState(String title, String content){
         feedTitle=new String(title);
         feedContent=new String(content);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        myPostReference.removeEventListener(myPostListener);
     }
 }
