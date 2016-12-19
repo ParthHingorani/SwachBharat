@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="@string/iWantTo"
+        android:textSize="20sp"
+        android:textColor="@color/textPrimary"
+        android:layout_marginLeft="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/currentusertaskTop" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radiogroup_current_user_task"
+        android:checkedButton="@+id/radio_bt_take_task">
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_bt_delete_task"
+            android:textColor="@color/textSecondary"
+            android:id="@+id/radio_bt_take_task"/>
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_bt_completed"
+            android:textColor="@color/textSecondary"
+            android:id="@+id/radio_bt_leave_task"/>
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="right">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Cancel"
+            android:textColor="@color/colorAccent"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:id="@+id/bt_current_user_task_dialog_cancel"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/colorAccent"
+            android:id="@+id/bt_current_user_task_dialog_ok"/>
+
+    </LinearLayout>
+
+</LinearLayout>

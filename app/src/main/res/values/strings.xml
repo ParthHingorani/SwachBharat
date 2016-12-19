@@ -67,7 +67,8 @@
 
     <string name="radio_bt_take_task">Take Up this task !</string>
     <string name="radio_bt_leave_task">Leave this task</string>
-
+    <string name="radio_bt_delete_task">Delete this task</string>
+    <string name="radio_bt_completed">Mark as completed</string>
 
     <!-- activity_login.xml start -->
     <string name="madeWith">made with</string>
