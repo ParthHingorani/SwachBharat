@@ -30,7 +30,8 @@ public class StatisticsFragment extends Fragment {
 
     DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
     public View rv;
-    public static ArrayAdapter<String> loc_activity_ad, best_ngo_ad, best_usr_ad;
+    public static ArrayAdapter<String> loc_activity_ad;
+    String ngo = "NGO", individual = "Individual";
 
     String[] dummy_data =
             {
@@ -83,9 +84,25 @@ public class StatisticsFragment extends Fragment {
         ListView best_ngo_listView = (ListView) rv.findViewById(R.id.best_ngo_list_stats);
         best_ngo_listView.setAdapter(null);
         best_ngo_listView.deferNotifyDataSetChanged();
-        best_ngo_ad=setdata(getActivity(),R.layout.stats_item_best_ngo,R.id.txt_best_ngo_title,data_list);
+
+        ListAdapter adapter = new FirebaseListAdapter<User>(getActivity(), User.class, R.layout.stats_item_best_ngo, databaseReference.child("User"))
+        {
+
+            @Override
+            protected void populateView(View view, User user, int position) {
+
+                if (user.type.contentEquals(ngo))
+                {
+                    TextView title= (TextView)view.findViewById(R.id.txt_best_ngo_title);
+                    TextView completed=(TextView)view.findViewById(R.id.txt_best_ngo_completed);
+                    completed.setText("Completed Tasks : " + user.getCompleted());
+                    title.setText(user.getName());
+                }
+            }
+        };
+
         setListViewHeightBasedOnChildren(best_ngo_listView);
-        best_ngo_listView.setAdapter(best_ngo_ad);
+        best_ngo_listView.setAdapter(adapter);
     }
 
     public void best_usr_setdata()
@@ -93,9 +110,25 @@ public class StatisticsFragment extends Fragment {
         ListView best_usr_listView = (ListView) rv.findViewById(R.id.best_usr_list_stats);
         best_usr_listView.setAdapter(null);
         best_usr_listView.deferNotifyDataSetChanged();
-        best_usr_ad=setdata(getActivity(),R.layout.stats_item_best_usr,R.id.txt_best_usr_title,data_list);
+
+        ListAdapter adapter = new FirebaseListAdapter<User>(getActivity(), User.class, R.layout.stats_item_best_usr, databaseReference.child("User"))
+        {
+
+            @Override
+            protected void populateView(View view, User user, int position) {
+
+                if (user.type.contentEquals(individual))
+                {
+                    TextView title= (TextView)view.findViewById(R.id.txt_best_usr_title);
+                    TextView completed=(TextView)view.findViewById(R.id.txt_best_usr_completed);
+                    completed.setText("Completed Tasks : " + user.getCompleted());
+                    title.setText(user.getName());
+                }
+            }
+        };
+
         setListViewHeightBasedOnChildren(best_usr_listView);
-        best_usr_listView.setAdapter(best_usr_ad);
+        best_usr_listView.setAdapter(adapter);
     }
 
     public void loc_setdata()
@@ -175,10 +208,13 @@ public class StatisticsFragment extends Fragment {
 
             @Override
             protected void populateView(View view, UserActive userActive, int position) {
-                TextView title= (TextView)view.findViewById(R.id.txt_usr_active_title);
-                TextView posts= (TextView)view.findViewById(R.id.txt_usr_active_posts);
-                posts.setText("Posts : " + userActive.getPosts());
-                title.setText(userActive.getName());
+                if(userActive.type.contentEquals(individual))
+                {
+                    TextView title= (TextView)view.findViewById(R.id.txt_usr_active_title);
+                    TextView posts= (TextView)view.findViewById(R.id.txt_usr_active_posts);
+                    posts.setText("Posts : " + userActive.getPosts());
+                    title.setText(userActive.getName());
+                }
             }
         };
 
@@ -197,13 +233,15 @@ public class StatisticsFragment extends Fragment {
 
             @Override
             protected void populateView(View view, User user, int position) {
-
-                TextView title= (TextView)view.findViewById(R.id.txt_usr_title);
-                TextView taken=(TextView)view.findViewById(R.id.txt_usr_taken);
-                TextView completed=(TextView)view.findViewById(R.id.txt_usr_completed);
-                taken.setText("Tasks Taken : " + user.getTaken());
-                completed.setText("Tasks Completed : " + user.getCompleted());
-                title.setText(user.getName());
+                if(user.type.contentEquals(individual))
+                {
+                    TextView title= (TextView)view.findViewById(R.id.txt_usr_title);
+                    TextView taken=(TextView)view.findViewById(R.id.txt_usr_taken);
+                    TextView completed=(TextView)view.findViewById(R.id.txt_usr_completed);
+                    taken.setText("Tasks Taken : " + user.getTaken());
+                    completed.setText("Tasks Completed : " + user.getCompleted());
+                    title.setText(user.getName());
+                }
             }
         };
 

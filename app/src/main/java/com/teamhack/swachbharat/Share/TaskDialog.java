@@ -30,7 +30,7 @@ import com.teamhack.swachbharat.R;
 public class TaskDialog extends Dialog implements View.OnClickListener {
 
     private static final String SHARE_CHILD = "Share", STATUS = "status";
-    int flag=0;
+    static int flag=0;
     Button bt_ok,bt_cancel;
     Share share;
     Context context;

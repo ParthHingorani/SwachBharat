@@ -9,8 +9,8 @@ public class UserActive {
     public String uid;
     public String name;
     public String email;
+    public String type;
     public int posts;
-    public int rank;
 
     public void setUid(String uid) {
         this.uid = uid;
@@ -22,6 +22,20 @@ public class UserActive {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setPosts(int posts)
+    {
+        this.posts = posts;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getType()
+    {
+        return type;
     }
 
     public String getUid() {
@@ -40,20 +54,4 @@ public class UserActive {
     {
         return posts;
     }
-
-    public void setPosts(int posts)
-    {
-        this.posts = posts;
-    }
-
-    public int getRank()
-    {
-        return rank;
-    }
-
-    public void setRank(int rank)
-    {
-        this.rank = rank;
-    }
-
 }

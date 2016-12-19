@@ -9,6 +9,7 @@ public class User
         public String uid;
         public String name;
         public String email;
+        public String type;
         public int taken;
         public int completed;
 
@@ -20,13 +21,28 @@ public class User
             this.name = name;
         }
 
+        public void setType(String type) {  this.type = type; }
+
+        public void setTaken(int taken)
+    {
+        this.taken = taken;
+    }
 
         public void setEmail(String email) {
             this.email = email;
         }
 
+        public void setCompleted(int completed)
+    {
+        this.completed=completed;
+    }
+
         public String getUid() {
             return uid;
+        }
+
+        public String getType() {
+            return type;
         }
 
         public String getName() {
@@ -42,16 +58,6 @@ public class User
             return taken;
         }
 
-        public void setTaken(int taken)
-        {
-            this.taken = taken;
-        }
-
         public int getCompleted(){ return completed;}
-
-        public void setCompleted(int completed)
-        {
-            this.completed=completed;
-        }
 
 }

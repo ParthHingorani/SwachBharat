@@ -39,7 +39,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/txt_best_ngo_tasks"
+                android:id="@+id/txt_best_ngo_completed"
                 android:text="Completed Tasks"
                 android:textColor="#009900"
                 android:textSize="12sp"
