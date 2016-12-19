@@ -153,7 +153,7 @@ public class TaskDialog extends Dialog implements View.OnClickListener {
             else if (getCategory().contentEquals(context.getResources().getString(R.string.radio_bt_completed)))
             {
                 showProgressBar();
-                DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference().child(SHARE_CHILD);
+                DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference().child(SHARE_CHILD).child(share.key);
                 databaseReference.child(STATUS).setValue("Completed").addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
