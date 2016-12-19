@@ -111,6 +111,8 @@ public class StatisticsFragment extends Fragment {
             protected void populateView(View view, Share share, int position) {
 
                 TextView title= (TextView)view.findViewById(R.id.txt_loc_title);
+                TextView time =(TextView)view.findViewById(R.id.txt_loc_timestamp);
+                time.setText("Posted on : " + share.getTime());
                 title.setText(share.getCategory());
             }
         };
@@ -134,9 +136,22 @@ public class StatisticsFragment extends Fragment {
         ListView task_listView = (ListView) rv.findViewById(R.id.task_list_stats);
         task_listView.setAdapter(null);
         task_listView.deferNotifyDataSetChanged();
-        task_ad=setdata(getActivity(),R.layout.stats_item_task,R.id.txt_task_title,data_list);
+
+        ListAdapter adapter = new FirebaseListAdapter<Share>(getActivity(), Share.class, R.layout.stats_item_task, databaseReference.child("Share").orderByChild("time"))
+        {
+
+            @Override
+            protected void populateView(View view, Share share, int position) {
+
+                TextView title= (TextView)view.findViewById(R.id.txt_task_title);
+                TextView time =(TextView)view.findViewById(R.id.txt_task_timestamp);
+                time.setText("Posted on : " + share.getTime());
+                title.setText(share.getCategory());
+            }
+        };
+
         setListViewHeightBasedOnChildren(task_listView);
-        task_listView.setAdapter(task_ad);
+        task_listView.setAdapter(adapter);
     }
 
     public void usr_active_setdata()
