@@ -63,6 +63,7 @@
     <string name="radio2">An untidy place</string>
     <string name="radio3">A location which is never cleaned</string>
     <string name="radio4">An open manhole</string>
+    <string name="radio5">Stagnant water</string>
     <!-- dialog_share.xml end -->
 
     <string name="radio_bt_take_task">Take Up this task !</string>
