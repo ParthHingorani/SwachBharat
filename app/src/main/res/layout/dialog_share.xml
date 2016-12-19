@@ -41,6 +41,13 @@
             android:text="@string/radio4"
             android:textColor="@color/textSecondary"
             android:id="@+id/radio_bt_manhole"/>
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/radio5"
+            android:textColor="@color/textSecondary"
+            android:id="@+id/radio_bt_stagnant"/>
+
     </RadioGroup>
 
     <LinearLayout
