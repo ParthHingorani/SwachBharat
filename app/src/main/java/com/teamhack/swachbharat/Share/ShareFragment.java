@@ -1,9 +1,15 @@
 package com.teamhack.swachbharat.Share;
 
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +26,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.teamhack.swachbharat.PermissionUtils;
 import com.teamhack.swachbharat.R;
 
 import java.util.ArrayList;
@@ -31,6 +38,7 @@ import java.util.List;
  */
 public class ShareFragment extends Fragment implements OnMapReadyCallback,GoogleMap.OnMarkerClickListener{
 
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     GoogleMap googleMap;
     List<Share> shareList;
     DatabaseReference shareReference;
@@ -113,6 +121,7 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback,Google
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap=googleMap;
         shareReference.addValueEventListener(shareListener);
+        enableMyLocation();
         googleMap.setOnMarkerClickListener(this);
         googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
@@ -134,4 +143,31 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback,Google
         }
         return false;
     }
+
+    private void enableMyLocation() {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission to access the location is missing.
+            PermissionUtils.requestPermission((AppCompatActivity) getContext(), LOCATION_PERMISSION_REQUEST_CODE,
+                    Manifest.permission.ACCESS_FINE_LOCATION, true);
+        } else if (getActivity() != null) {
+            // Access to the location has been granted to the app.
+            googleMap.setMyLocationEnabled(true);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
+            return;
+        }
+
+        if (PermissionUtils.isPermissionGranted(permissions, grantResults,
+                Manifest.permission.ACCESS_FINE_LOCATION)) {
+            enableMyLocation();
+        } else {
+        }
+    }
+
 }

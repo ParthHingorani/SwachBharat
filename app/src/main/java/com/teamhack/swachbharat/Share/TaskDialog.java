@@ -55,15 +55,10 @@ public class TaskDialog extends Dialog implements View.OnClickListener {
         super.onCreate(savedInstanceState);
 
         firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
-        Log.e("TaskDialog","START key:"+share.key);
-        Log.e("TaskDialog","uid1:"+share.createdBy.uid);
-        Log.e("TaskDialog","uid2:"+firebaseUser.getUid());
         if(share.getCreatedBy().uid.matches(firebaseUser.getUid()))
         {
             flag=1;
-            Log.e("TaskDialog","flag=1");
         }
-        Log.e("TaskDialog","if flag:"+flag);
         if(flag==0)
         {
             setContentView(R.layout.dialogue_task);
