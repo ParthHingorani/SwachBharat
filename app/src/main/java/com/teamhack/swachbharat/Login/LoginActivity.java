@@ -24,8 +24,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.teamhack.swachbharat.MainActivity;
 import com.teamhack.swachbharat.MyApplication;
 import com.teamhack.swachbharat.Profile.User;
@@ -42,6 +45,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth.AuthStateListener mAuthListener;
     ProgressDialog progressDialog;
     private GoogleApiClient mGoogleApiClient;
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +56,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(new Intent(LoginActivity.this,MainActivity.class));
             finish();
         }
-
+        findViewById(R.id.layout_choose).setVisibility(View.INVISIBLE);
+        findViewById(R.id.bt_individual).setOnClickListener(this);
+        findViewById(R.id.bt_ngo).setOnClickListener(this);
+        findViewById(R.id.bt_govt).setOnClickListener(this);
+        databaseReference= FirebaseDatabase.getInstance().getReference().child(USER_CHILD);
         findViewById(R.id.sign_in_button).setOnClickListener(this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -150,25 +158,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void writeUser() {
-        User user=new User();
-        FirebaseUser firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
-        user.uid=firebaseUser.getUid();
-        user.name=firebaseUser.getDisplayName();
-        user.email=firebaseUser.getEmail();
-        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child(USER_CHILD);
-        databaseReference.child(user.uid).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+        final FirebaseUser firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
+        ValueEventListener userListener=new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    hideProgressDialog();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                hideProgressDialog();
+                if(dataSnapshot.child(firebaseUser.getUid()).exists()){
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();
                 }else {
-                    Toast.makeText(LoginActivity.this, "Couldn't update the database", Toast.LENGTH_SHORT).show();
+                    showCategoryChooser();
                 }
             }
-        });
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        databaseReference.addListenerForSingleValueEvent(userListener);
+
+
+    }
+
+    private void showCategoryChooser() {
+        findViewById(R.id.layout_login).setVisibility(View.GONE);
+        findViewById(R.id.layout_choose).setVisibility(View.VISIBLE);
     }
 
     private void signIn() {
@@ -218,6 +232,39 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (i == R.id.sign_in_button) {
             signIn();
         }
+        switch (v.getId()){
+            case R.id.bt_individual:
+                InsertInDB(getResources().getString(R.string.type_individual));
+                break;
+            case R.id.bt_ngo:
+                InsertInDB(getResources().getString(R.string.type_individual));
+                break;
+            case R.id.bt_govt:
+                InsertInDB(getResources().getString(R.string.type_individual));
+                break;
+        }
+    }
+
+    private void InsertInDB(String type) {
+        showProgressDialog();
+        User user=new User();
+        final FirebaseUser firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
+        user.uid=firebaseUser.getUid();
+        user.name=firebaseUser.getDisplayName();
+        user.email=firebaseUser.getEmail();
+        user.type=type;
+        databaseReference.child(user.uid).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                hideProgressDialog();
+                if(task.isSuccessful()){
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
+                }else {
+                    Toast.makeText(LoginActivity.this, "Couldn't update the database", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
 }

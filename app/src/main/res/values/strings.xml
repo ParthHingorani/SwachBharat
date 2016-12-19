@@ -72,6 +72,9 @@
     <!-- activity_login.xml start -->
     <string name="madeWith">made with</string>
     <string name="in">in</string>
+    <string name="type_individual">Individual</string>
+    <string name="type_ngo">NGO</string>
+    <string name="type_govt">Government Organisation</string>
     <!-- activity_login.xml end -->
 
 </resources>

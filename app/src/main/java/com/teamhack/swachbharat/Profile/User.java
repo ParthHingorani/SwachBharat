@@ -1,13 +1,16 @@
 package com.teamhack.swachbharat.Profile;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 /**
  * Created by Rishi on 08-12-2016.
  */
-
+@IgnoreExtraProperties
 public class User {
     public String uid;
     public String name;
     public String email;
+    public String type;
     //public String place;
 
     public void setUid(String uid) {
@@ -26,6 +29,10 @@ public class User {
         this.email = email;
     }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getUid() {
         return uid;
     }
@@ -38,7 +45,11 @@ public class User {
         return email;
     }
 
-//    public String getPlace() {
+    public String getType() {
+        return type;
+    }
+
+    //    public String getPlace() {
 //        return place;
 //    }
 }
