@@ -30,7 +30,7 @@ public class StatisticsFragment extends Fragment {
 
     DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
     public View rv;
-    public static ArrayAdapter<String> loc_ad, loc_activity_ad, best_ngo_ad, best_usr_ad, task_ad, usr_active_ad;
+    public static ArrayAdapter<String> loc_activity_ad, best_ngo_ad, best_usr_ad;
 
     String[] dummy_data =
             {
@@ -112,6 +112,8 @@ public class StatisticsFragment extends Fragment {
 
                 TextView title= (TextView)view.findViewById(R.id.txt_loc_title);
                 TextView time =(TextView)view.findViewById(R.id.txt_loc_timestamp);
+                TextView status =(TextView)view.findViewById(R.id.txt_loc_status);
+                status.setText("Status : " + share.getStatus());
                 time.setText("Posted on : " + share.getTime());
                 title.setText(share.getCategory());
             }
@@ -145,6 +147,15 @@ public class StatisticsFragment extends Fragment {
 
                 TextView title= (TextView)view.findViewById(R.id.txt_task_title);
                 TextView time =(TextView)view.findViewById(R.id.txt_task_timestamp);
+                TextView takenby=(TextView)view.findViewById(R.id.txt_task_taken_by);
+                if(share.getTakenBy()!=null)
+                {
+                    takenby.setText("Taken By : " + share.getTakenBy().getName());
+                }
+                else
+                {
+                    takenby.setText("Taken By : " + share.getTakenBy());
+                }
                 time.setText("Posted on : " + share.getTime());
                 title.setText(share.getCategory());
             }
