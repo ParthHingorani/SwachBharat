@@ -1,0 +1,50 @@
+package com.teamhack.swachbharat.Statistics;
+
+import android.app.Activity;
+import android.view.View;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.teamhack.swachbharat.Profile.User;
+import com.teamhack.swachbharat.R;
+
+import static com.teamhack.swachbharat.Statistics.StatisticsFragment.setListViewHeightBasedOnChildren;
+
+/**
+ * Created by neptune on 21/12/16.
+ */
+
+class BestUsers {
+
+    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+    private String individual = "Individual";
+
+    void best_usr_setdata(Activity activity, View rv)
+    {
+        ListView best_usr_listView = (ListView) rv.findViewById(R.id.best_usr_list_stats);
+        best_usr_listView.setAdapter(null);
+        best_usr_listView.deferNotifyDataSetChanged();
+
+        ListAdapter adapter = new ReverseFirebaseListAdapter<User>(activity, User.class, R.layout.stats_item_best_usr, databaseReference.child("User").orderByChild("completed"))
+        {
+            @Override
+            protected void populateView(View view, User user, int position) {
+
+                if (user.getType().contentEquals(individual))
+                {
+                    TextView title= (TextView)view.findViewById(R.id.txt_best_usr_title);
+                    TextView completed=(TextView)view.findViewById(R.id.txt_best_usr_completed);
+                    new TasksStatus(user,completed,null).execute();
+                    title.setText(user.getName());
+                }
+            }
+        };
+
+        setListViewHeightBasedOnChildren(best_usr_listView);
+        best_usr_listView.setAdapter(adapter);
+    }
+
+}

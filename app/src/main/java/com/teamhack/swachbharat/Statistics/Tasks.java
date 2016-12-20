@@ -1,75 +1,56 @@
 package com.teamhack.swachbharat.Statistics;
 
+import android.app.Activity;
+import android.view.View;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.teamhack.swachbharat.Profile.User;
+import com.teamhack.swachbharat.R;
 import com.teamhack.swachbharat.Share.Share;
 
+import static com.teamhack.swachbharat.Statistics.StatisticsFragment.setListViewHeightBasedOnChildren;
+
 /**
- * Created by neptune on 20/12/16.
+ * Created by neptune on 21/12/16.
  */
 
-public class Tasks {
+class Tasks {
 
-    public int completed, taken;
+    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-    public void taskCompleted(final User user, final TextView completedText)
+    void task_setdata(Activity activity, View rv)
     {
-        final DatabaseReference completedReference= FirebaseDatabase.getInstance().getReference();
-        ValueEventListener completedEventListener = completedReference.addValueEventListener(new ValueEventListener(){
+        ListView task_listView = (ListView) rv.findViewById(R.id.task_list_stats);
+        task_listView.setAdapter(null);
+        task_listView.deferNotifyDataSetChanged();
+
+        ListAdapter adapter = new FirebaseListAdapter<Share>(activity, Share.class, R.layout.stats_item_task, databaseReference.child("Share").orderByChild("time"))
+        {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                completed =0;
-                for(DataSnapshot shareSnapshot: dataSnapshot.getChildren())
+            protected void populateView(View view, Share share, int position) {
+
+                TextView title= (TextView)view.findViewById(R.id.txt_task_title);
+                TextView time =(TextView)view.findViewById(R.id.txt_task_timestamp);
+                TextView takenby=(TextView)view.findViewById(R.id.txt_task_taken_by);
+                if(share.getTakenBy()!=null)
                 {
-                    Share s=shareSnapshot.getValue(Share.class);
-                    if(s.getTakenBy()!=null&&s.getTakenBy().uid.contentEquals(user.getUid())&&s.getStatus().contentEquals("Completed"))
-                    {
-                        completed++;
-                    }
+                    takenby.setText("Taken By : " + share.getTakenBy().getName());
                 }
-                int newcomplete=user.getCompleted()+completed;
-                completedReference.child("User").child(user.getUid()).child("completed").setValue(newcomplete);
-                completedText.setText("Tasks Completed : "+completed);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        completedReference.child("Share").addValueEventListener(completedEventListener);
-    }
-
-    public void taskTaken(final User user, final TextView takenText)
-    {
-        DatabaseReference takenReference= FirebaseDatabase.getInstance().getReference().child("Share");
-        ValueEventListener takenEventListener = takenReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                taken =0;
-                for(DataSnapshot shareSnapshot: dataSnapshot.getChildren())
+                else
                 {
-                    Share s=shareSnapshot.getValue(Share.class);
-                    if(s.getTakenBy()!=null&&s.getTakenBy().uid.contentEquals(user.getUid())&&s.getStatus().contentEquals("Taken"))
-                    {
-                        taken++;
-                    }
+                    takenby.setText("Taken By : " + share.getTakenBy());
                 }
-                takenText.setText("Tasks Taken :"+ taken);
+                time.setText("Posted on : " + share.getTime());
+                title.setText(share.getCategory());
             }
+        };
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        takenReference.addValueEventListener(takenEventListener);
+        setListViewHeightBasedOnChildren(task_listView);
+        task_listView.setAdapter(adapter);
     }
 
 }
