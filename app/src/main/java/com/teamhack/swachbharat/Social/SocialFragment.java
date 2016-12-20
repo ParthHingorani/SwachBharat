@@ -1,8 +1,10 @@
 package com.teamhack.swachbharat.Social;
 
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.teamhack.swachbharat.PermissionUtils;
 import com.teamhack.swachbharat.R;
 
 import java.util.ArrayList;
@@ -27,6 +30,7 @@ import java.util.List;
  */
 public class SocialFragment extends Fragment {
 
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     RecyclerView rv_feed;
     SocialAdapter socialAdapter;
     List<Social> feedList;
@@ -85,6 +89,22 @@ public class SocialFragment extends Fragment {
             }
         });
         return v;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
+            return;
+        }
+
+        if (PermissionUtils.isPermissionGranted(permissions, grantResults,
+                Manifest.permission.ACCESS_FINE_LOCATION)) {
+            socialDialog = new SocialDialog(getActivity());
+            socialDialog.show();
+            socialDialog.enableMyLocation();
+        } else {
+        }
     }
 
     @Override

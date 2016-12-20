@@ -18,9 +18,9 @@
             android:layout_height="wrap_content"
             android:text="First post of Social"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="@color/textPrimary"
             android:textSize="20sp"
-            android:textStyle="normal"
-            android:textColor="@color/textPrimary"/>
+            android:textStyle="normal" />
 
         <TextView
             android:id="@+id/timestamp"
@@ -39,20 +39,17 @@
             android:textSize="12sp" />
 
         <TextView
-            android:text="TextView"
+            android:id="@+id/postDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/postDetails"
-            android:textSize="17sp"
-            android:textColor="@color/textSecondary"/>
-<!--
-        <fragment
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/myLocation"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:text="TextView"
+            android:textColor="@color/textSecondary"
+            android:textSize="17sp" />
+
+        <ImageView
+            android:id="@+id/img_social_map"
             android:layout_width="match_parent"
-            android:layout_height="100dp" />
--->
+            android:layout_height="150dp" />
     </LinearLayout>
 
 

@@ -47,7 +47,7 @@ public class FeedFragment extends Fragment {
         View v= inflater.inflate(R.layout.fragment_feed, container, false);
         progressDialog=new ProgressDialog(getActivity());
         progressDialog.setIndeterminate(true);
-        progressDialog.setCancelable(false);
+        //progressDialog.setCancelable(false);
         progressDialog.setMessage("Loading . . .");
         progressDialog.show();
         rv_feed= (RecyclerView) v.findViewById(R.id.rv_feed);

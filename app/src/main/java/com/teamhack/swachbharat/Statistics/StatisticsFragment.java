@@ -51,21 +51,22 @@ public class StatisticsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public int taskTaken(final User user)
+    public void taskTaken(final User user, final TextView taken)
     {
         DatabaseReference takenReference= FirebaseDatabase.getInstance().getReference().child("Share");
         ValueEventListener takenEventListener = takenReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                taken=0;
+                StatisticsFragment.this.taken =0;
                 for(DataSnapshot shareSnapshot: dataSnapshot.getChildren())
                 {
                     Share s=shareSnapshot.getValue(Share.class);
                     if(s.getTakenBy()!=null&&s.getTakenBy().uid.contentEquals(user.getUid())&&s.getStatus().contentEquals("Taken"))
                     {
-                        taken++;
+                        StatisticsFragment.this.taken++;
                     }
                 }
+                taken.setText("Tasks Taken :"+StatisticsFragment.this.taken);
             }
 
             @Override
@@ -73,25 +74,25 @@ public class StatisticsFragment extends Fragment {
 
             }
         });
-        //takenReference.removeEventListener(takenEventListener);
-        return taken;
+        takenReference.addValueEventListener(takenEventListener);
     }
 
-    public int taskCompleted(final User user)
+    public void taskCompleted(final User user, final TextView completed)
     {
         DatabaseReference completedReference= FirebaseDatabase.getInstance().getReference().child("Share");
         ValueEventListener completedEventListener = completedReference.addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                completed=0;
+                StatisticsFragment.this.completed =0;
                 for(DataSnapshot shareSnapshot: dataSnapshot.getChildren())
                 {
                     Share s=shareSnapshot.getValue(Share.class);
                     if(s.getTakenBy()!=null&&s.getTakenBy().uid.contentEquals(user.getUid())&&s.getStatus().contentEquals("Completed"))
                     {
-                        completed++;
+                        StatisticsFragment.this.completed++;
                     }
                 }
+                completed.setText("Tasks Completed : "+StatisticsFragment.this.completed++);
             }
 
             @Override
@@ -99,8 +100,7 @@ public class StatisticsFragment extends Fragment {
 
             }
         });
-        //completedReference.removeEventListener(completedEventListener);
-        return completed;
+        completedReference.addValueEventListener(completedEventListener);
     }
 
     public static void setListViewHeightBasedOnChildren(ListView listView) {
@@ -153,7 +153,8 @@ public class StatisticsFragment extends Fragment {
                 {
                     TextView title= (TextView)view.findViewById(R.id.txt_best_ngo_title);
                     TextView completed=(TextView)view.findViewById(R.id.txt_best_ngo_completed);
-                    completed.setText("Completed Tasks : " + taskCompleted(user));
+//                    completed.setText("Completed Tasks : " + taskCompleted(user, completed));
+                    taskCompleted(user,completed);
                     title.setText(user.getName());
                 }
             }
@@ -179,7 +180,8 @@ public class StatisticsFragment extends Fragment {
                 {
                     TextView title= (TextView)view.findViewById(R.id.txt_best_usr_title);
                     TextView completed=(TextView)view.findViewById(R.id.txt_best_usr_completed);
-                    completed.setText("Completed Tasks : " + taskCompleted(user));
+//                    completed.setText("Completed Tasks : " + taskCompleted(user, completed));
+                    taskCompleted(user,completed);
                     title.setText(user.getName());
                 }
             }
@@ -296,8 +298,10 @@ public class StatisticsFragment extends Fragment {
                     TextView title= (TextView)view.findViewById(R.id.txt_usr_title);
                     TextView taken=(TextView)view.findViewById(R.id.txt_usr_taken);
                     TextView completed=(TextView)view.findViewById(R.id.txt_usr_completed);
-                    taken.setText("Tasks Taken : " + taskTaken(user));
-                    completed.setText("Tasks Completed : " + taskCompleted(user));
+                    taskTaken(user,taken);
+                    taskCompleted(user,completed);
+//                    taken.setText("Tasks Taken : " + taskTaken(user));
+//                    completed.setText("Tasks Completed : " + taskCompleted(user));
                     title.setText(user.getName());
                 }
             }
