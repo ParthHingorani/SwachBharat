@@ -11,6 +11,8 @@ public class User {
     public String name;
     public String email;
     public String type;
+    public int posts;
+    public int completed;
     //public String place;
 
     public void setUid(String uid) {
@@ -31,6 +33,24 @@ public class User {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public void setCompleted(int completed) {
+        this.completed = completed;
+    }
+
+    public void setPosts(int posts)
+    {
+        this.posts = posts;
+    }
+
+    public int getPosts()
+    {
+        return posts;
+    }
+
+    public int getCompleted() {
+        return completed;
     }
 
     public String getUid() {

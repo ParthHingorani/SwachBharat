@@ -2,9 +2,9 @@ package com.teamhack.swachbharat.Login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -30,7 +30,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.teamhack.swachbharat.MainActivity;
-import com.teamhack.swachbharat.MyApplication;
 import com.teamhack.swachbharat.Profile.User;
 import com.teamhack.swachbharat.R;
 
@@ -253,6 +252,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         user.name=firebaseUser.getDisplayName();
         user.email=firebaseUser.getEmail();
         user.type=type;
+        user.posts=0;
+        user.completed=0;
         databaseReference.child(user.uid).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
