@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,7 +27,6 @@ public class StatisticsFragment extends Fragment {
     DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
     public View rv;
     Tasks tasks = new Tasks();
-    public static ArrayAdapter<String> loc_activity_ad;
     String ngo = "NGO", individual = "Individual";
 
     public StatisticsFragment() {
@@ -65,6 +63,7 @@ public class StatisticsFragment extends Fragment {
         ListAdapter adapter = new ReverseFirebaseListAdapter<User>(getActivity(), User.class, R.layout.stats_item_best_ngo, databaseReference.child("User").orderByChild("completed"))
         {
 
+            int n=1;
             @Override
             protected void populateView(View view, User user, int position) {
 
@@ -73,7 +72,8 @@ public class StatisticsFragment extends Fragment {
                     TextView title= (TextView)view.findViewById(R.id.txt_best_ngo_title);
                     TextView completed=(TextView)view.findViewById(R.id.txt_best_ngo_completed);
                     tasks.taskCompleted(user,completed);
-                    title.setText(user.getName());
+                    title.setText(n+". "+user.getName());
+                    n++;
                 }
             }
         };
@@ -90,7 +90,7 @@ public class StatisticsFragment extends Fragment {
 
         ListAdapter adapter = new ReverseFirebaseListAdapter<User>(getActivity(), User.class, R.layout.stats_item_best_usr, databaseReference.child("User").orderByChild("completed"))
         {
-
+            int n=1;
             @Override
             protected void populateView(View view, User user, int position) {
 
@@ -99,7 +99,8 @@ public class StatisticsFragment extends Fragment {
                     TextView title= (TextView)view.findViewById(R.id.txt_best_usr_title);
                     TextView completed=(TextView)view.findViewById(R.id.txt_best_usr_completed);
                     tasks.taskCompleted(user,completed);
-                    title.setText(user.getName());
+                    title.setText(n + ". " + user.getName());
+                    n++;
                 }
             }
         };
@@ -116,7 +117,7 @@ public class StatisticsFragment extends Fragment {
 
         ListAdapter adapter = new FirebaseListAdapter<Share>(getActivity(), Share.class, R.layout.stats_item_loc, databaseReference.child("Share").orderByChild("time"))
         {
-
+            int n=1;
             @Override
             protected void populateView(View view, Share share, int position) {
 
@@ -125,7 +126,8 @@ public class StatisticsFragment extends Fragment {
                 TextView status =(TextView)view.findViewById(R.id.txt_loc_status);
                 status.setText("Status : " + share.getStatus());
                 time.setText("Posted on : " + share.getTime());
-                title.setText(share.getCategory());
+                title.setText(n + ". " + share.getCategory());
+                n++;
             }
         };
 
@@ -141,7 +143,7 @@ public class StatisticsFragment extends Fragment {
 
         ListAdapter adapter = new FirebaseListAdapter<Social>(getActivity(), Social.class, R.layout.stats_item_loc_activity, databaseReference.child("Social").orderByChild("time"))
         {
-
+            int n=1;
             @Override
             protected void populateView(View view, Social social, int position) {
 
@@ -149,10 +151,11 @@ public class StatisticsFragment extends Fragment {
                 TextView info = (TextView) view.findViewById(R.id.txt_loc_activity_info);
                 TextView time = (TextView) view.findViewById(R.id.txt_loc_activity_timestamp);
                 TextView by = (TextView) view.findViewById(R.id.txt_loc_activity_by);
-                title.setText(social.getCategory());
+                title.setText(n + ". " + social.getCategory());
                 info.setText(social.getSocialDetail());
                 time.setText("Posted on : " + social.getTime());
                 by.setText(" by : " + social.getUser().getName());
+                n++;
             }
         };
 
@@ -168,7 +171,7 @@ public class StatisticsFragment extends Fragment {
 
         ListAdapter adapter = new FirebaseListAdapter<Share>(getActivity(), Share.class, R.layout.stats_item_task, databaseReference.child("Share").orderByChild("time"))
         {
-
+            int n=1;
             @Override
             protected void populateView(View view, Share share, int position) {
 
@@ -184,7 +187,8 @@ public class StatisticsFragment extends Fragment {
                     takenby.setText("Taken By : " + share.getTakenBy());
                 }
                 time.setText("Posted on : " + share.getTime());
-                title.setText(share.getCategory());
+                title.setText(n + ". " + share.getCategory());
+                n++;
             }
         };
 
@@ -200,6 +204,7 @@ public class StatisticsFragment extends Fragment {
 
         ListAdapter adapter = new ReverseFirebaseListAdapter<com.teamhack.swachbharat.Profile.User>(getActivity(), com.teamhack.swachbharat.Profile.User.class, R.layout.stats_item_usr_active, databaseReference.child("User").orderByChild("posts")) {
 
+            int n=1;
             @Override
             protected void populateView(View view, com.teamhack.swachbharat.Profile.User userActive, int position) {
                 if(userActive.type.contentEquals(individual))
@@ -207,7 +212,8 @@ public class StatisticsFragment extends Fragment {
                     TextView title= (TextView)view.findViewById(R.id.txt_usr_active_title);
                     TextView posts= (TextView)view.findViewById(R.id.txt_usr_active_posts);
                     posts.setText("Posts : " + userActive.getPosts());
-                    title.setText(userActive.getName());
+                    title.setText(n + ". " + userActive.getName());
+                    n++;
                 }
             }
         };
@@ -224,7 +230,7 @@ public class StatisticsFragment extends Fragment {
 
         ListAdapter adapter = new FirebaseListAdapter<com.teamhack.swachbharat.Profile.User>(getActivity(), com.teamhack.swachbharat.Profile.User.class, R.layout.stats_item_usr, databaseReference.child("User").orderByKey())
         {
-
+            int n=1;
             @Override
             protected void populateView(View view, com.teamhack.swachbharat.Profile.User user, int position) {
                 if(user.getType().contentEquals(individual))
@@ -234,7 +240,8 @@ public class StatisticsFragment extends Fragment {
                     TextView completed=(TextView)view.findViewById(R.id.txt_usr_completed);
                     tasks.taskTaken(user,taken);
                     tasks.taskCompleted(user,completed);
-                    title.setText(user.getName());
+                    title.setText(n + ". " + user.getName());
+                    n++;
                 }
             }
         };
