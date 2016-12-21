@@ -109,39 +109,39 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback,Google
                                 break;
                         }
 
-                        final Marker marker=m;
-                        //Make the marker bounce
-                        final Handler handler = new Handler();
+//                        final Marker marker=m;
+//                        //Make the marker bounce
+//                        final Handler handler = new Handler();
+//
+//                        final long startTime = SystemClock.uptimeMillis();
+//                        final long duration = 2000;
+//
+//                        Projection proj = googleMap.getProjection();
+//                        final LatLng markerLatLng = marker.getPosition();
+//                        Point startPoint = proj.toScreenLocation(markerLatLng);
+//                        startPoint.offset(0, -100);
+//                        final LatLng startLatLng = proj.fromScreenLocation(startPoint);
+//
+//                        final Interpolator interpolator = new BounceInterpolator();
+//
+//                        handler.post(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                long elapsed = SystemClock.uptimeMillis() - startTime;
+//                                float t = interpolator.getInterpolation((float) elapsed / duration);
+//                                double lng = t * markerLatLng.longitude + (1 - t) * startLatLng.longitude;
+//                                double lat = t * markerLatLng.latitude + (1 - t) * startLatLng.latitude;
+//                                marker.setPosition(new LatLng(lat, lng));
+//
+//                                if (t < 1.0) {
+//                                    // Post again 16ms later.
+//                                    handler.postDelayed(this, 16);
+//                                }
+//                            }
+//                        });
 
-                        final long startTime = SystemClock.uptimeMillis();
-                        final long duration = 2000;
 
-                        Projection proj = googleMap.getProjection();
-                        final LatLng markerLatLng = marker.getPosition();
-                        Point startPoint = proj.toScreenLocation(markerLatLng);
-                        startPoint.offset(0, -100);
-                        final LatLng startLatLng = proj.fromScreenLocation(startPoint);
-
-                        final Interpolator interpolator = new BounceInterpolator();
-
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                long elapsed = SystemClock.uptimeMillis() - startTime;
-                                float t = interpolator.getInterpolation((float) elapsed / duration);
-                                double lng = t * markerLatLng.longitude + (1 - t) * startLatLng.longitude;
-                                double lat = t * markerLatLng.latitude + (1 - t) * startLatLng.latitude;
-                                marker.setPosition(new LatLng(lat, lng));
-
-                                if (t < 1.0) {
-                                    // Post again 16ms later.
-                                    handler.postDelayed(this, 16);
-                                }
-                            }
-                        });
-
-
-                        shareMap.put(marker,s);
+                        shareMap.put(m,s);
 
                     }
                 }
@@ -212,8 +212,7 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback,Google
             }
         });
 
-        //return false; //have not consumed the event
-        return true; //have consumed the event
+        return false;
     }
 
     private void enableMyLocation() {
