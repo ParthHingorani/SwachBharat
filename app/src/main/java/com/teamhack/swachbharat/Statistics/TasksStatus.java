@@ -80,10 +80,11 @@ public class TasksStatus extends AsyncTask<Void, Void, Void>{
                 }
             });
             takenReference.addValueEventListener(takenEventListener);
+            
+            takenReference.removeEventListener(takenEventListener);
         }
 
         completedReference.removeEventListener(completedEventListener);
-        takenReference.removeEventListener(takenEventListener);
 
         return null;
     }

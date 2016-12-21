@@ -11,6 +11,8 @@ import android.widget.ListView;
 
 import com.teamhack.swachbharat.R;
 
+import io.fabric.sdk.android.services.concurrency.AsyncTask;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -57,15 +59,14 @@ public class StatisticsFragment extends Fragment {
 
         /*
         bestNGOs.best_ngo_setdata(getActivity(), rootView);
-        bestUsers.best_usr_setdata(getActivity(), rootView);
-        locations.loc_setdata(getActivity(), rootView);
         locActivities.loc_activity_setdata(getActivity(), rootView);
-        tasks.task_setdata(getActivity(), rootView);
-
         activeUsers.usr_active_setdata(getActivity(), rootView);
         */
 
-        new Users(getActivity(),rootView).execute();
+        new BestUsers(getActivity(), rootView).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new Tasks(getActivity(), rootView).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new Locations(getActivity(), rootView).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new Users(getActivity(), rootView).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         return rootView;
     }

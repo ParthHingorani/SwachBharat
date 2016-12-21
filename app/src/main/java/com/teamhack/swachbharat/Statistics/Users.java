@@ -32,19 +32,21 @@ class Users extends AsyncTask<Void, Void, ListAdapter>
         this.activity = activity;
     }
 
+    @Override
     protected void onPreExecute()
     {
         usr_listView.setAdapter(null);
         usr_listView.deferNotifyDataSetChanged();
     }
 
+    @Override
     protected ListAdapter doInBackground(Void... params)
     {
 
-        ListAdapter adapter = new FirebaseListAdapter<User>(activity, com.teamhack.swachbharat.Profile.User.class, R.layout.stats_item_usr, databaseReference.child("User").orderByKey())
+        ListAdapter adapter = new FirebaseListAdapter<User>(activity, User.class, R.layout.stats_item_usr, databaseReference.child("User").orderByKey())
         {
             @Override
-            protected void populateView(View view, com.teamhack.swachbharat.Profile.User user, int position) {
+            protected void populateView(View view, User user, int position) {
                 if(user.getType().contentEquals(individual))
                 {
                     TextView title= (TextView)view.findViewById(R.id.txt_usr_title);
@@ -59,6 +61,7 @@ class Users extends AsyncTask<Void, Void, ListAdapter>
         return adapter;
     }
 
+    @Override
     protected void onPostExecute(ListAdapter adapter)
     {
         setListViewHeightBasedOnChildren(usr_listView);

@@ -1,6 +1,7 @@
 package com.teamhack.swachbharat.Statistics;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -18,15 +19,26 @@ import static com.teamhack.swachbharat.Statistics.StatisticsFragment.setListView
  * Created by neptune on 21/12/16.
  */
 
-class Tasks {
+class Tasks extends AsyncTask<Void, Void, ListAdapter>{
 
+    private ListView task_listView;
+    private Activity activity;
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-    void task_setdata(Activity activity, View rv)
+    public Tasks(Activity activity, View rv)
     {
-        ListView task_listView = (ListView) rv.findViewById(R.id.task_list_stats);
+        this.activity = activity;
+        this.task_listView = (ListView) rv.findViewById(R.id.task_list_stats);
+    }
+
+    @Override
+    protected void onPreExecute() {
         task_listView.setAdapter(null);
         task_listView.deferNotifyDataSetChanged();
+    }
+
+    @Override
+    protected ListAdapter doInBackground(Void... params) {
 
         ListAdapter adapter = new FirebaseListAdapter<Share>(activity, Share.class, R.layout.stats_item_task, databaseReference.child("Share").orderByChild("time"))
         {
@@ -49,6 +61,12 @@ class Tasks {
             }
         };
 
+        return adapter;
+    }
+
+    @Override
+    protected void onPostExecute(ListAdapter adapter)
+    {
         setListViewHeightBasedOnChildren(task_listView);
         task_listView.setAdapter(adapter);
     }
