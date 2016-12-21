@@ -23,6 +23,7 @@ class Users extends AsyncTask<Void, Void, ListAdapter>
 {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private String individual = "Individual";
+    private View rv;
     private ListView usr_listView;
     private Activity activity;
 
@@ -30,6 +31,7 @@ class Users extends AsyncTask<Void, Void, ListAdapter>
     {
         this.usr_listView = (ListView) rv.findViewById(R.id.usr_list_stats);
         this.activity = activity;
+        this.rv = rv;
     }
 
     @Override
@@ -52,7 +54,7 @@ class Users extends AsyncTask<Void, Void, ListAdapter>
                     TextView title= (TextView)view.findViewById(R.id.txt_usr_title);
                     TextView taken=(TextView)view.findViewById(R.id.txt_usr_taken);
                     TextView completed=(TextView)view.findViewById(R.id.txt_usr_completed);
-                    new TasksStatus(user,completed,taken).execute();
+                    new TasksStatus(user,completed,taken,rv).execute();
                     title.setText(user.getName());
                 }
             }

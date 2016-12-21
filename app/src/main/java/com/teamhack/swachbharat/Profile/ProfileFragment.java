@@ -24,9 +24,12 @@ import com.teamhack.swachbharat.Feed.Feed;
 import com.teamhack.swachbharat.Feed.FeedAdapter;
 import com.teamhack.swachbharat.R;
 import com.teamhack.swachbharat.Share.Share;
+import com.teamhack.swachbharat.Statistics.TasksStatus;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.fabric.sdk.android.services.concurrency.AsyncTask;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,13 +38,14 @@ public class ProfileFragment extends Fragment {
 
     private static final String FEED_CHILD = "Feed";
     private final static String SHARE_CHILD="Share";
+    private static final String USER_CHILD="User";
     ImageView img_user;
-    TextView txt_user,txt_posts,txt_locations,txt_no_post;
+    TextView txt_user,txt_posts,txt_locations,txt_no_post,txt_taken,txt_completed;
     RecyclerView rv_my_posts;
     FeedAdapter feedAdapter;
     List<Feed> feedList;
-    DatabaseReference myPostReference,locationReference;
-    ValueEventListener myPostListener,locationListener;
+    DatabaseReference myPostReference,locationReference,userReference;
+    ValueEventListener myPostListener,locationListener,userListener;
     FirebaseUser firebaseUser;
     LinearLayoutManager linearLayoutManager;
     int no_of_posts,no_of_location;
@@ -55,7 +59,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v= inflater.inflate(R.layout.fragment_profile, container, false);
+        final View v= inflater.inflate(R.layout.fragment_profile, container, false);
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
         feedList=new ArrayList<>();
         img_user= (ImageView) v.findViewById(R.id.img_user);
@@ -64,8 +68,32 @@ public class ProfileFragment extends Fragment {
         txt_locations= (TextView) v.findViewById(R.id.txt_no_of_locations);
         txt_no_post= (TextView) v.findViewById(R.id.txt_no_post);
         rv_my_posts= (RecyclerView) v.findViewById(R.id.rv_my_posts);
+        txt_taken= (TextView) v.findViewById(R.id.txt_no_of_tasks_taken);
+        txt_completed= (TextView) v.findViewById(R.id.txt_no_of_tasks_completed);
         txt_user.setText(firebaseUser.getDisplayName());
         Glide.with(getActivity()).load(firebaseUser.getPhotoUrl()).into(img_user);
+
+        userReference= FirebaseDatabase.getInstance().getReference().child(USER_CHILD);
+        userListener= new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot userSnapshot:dataSnapshot.getChildren())
+                {
+                    User user = userSnapshot.getValue(User.class);
+                    if(user.getUid().contentEquals(firebaseUser.getUid()))
+                    {
+                        new TasksStatus(user, txt_completed, txt_taken, v).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        userReference.addValueEventListener(userListener);
+
         myPostReference= FirebaseDatabase.getInstance().getReference().child(FEED_CHILD);
         myPostListener=new ValueEventListener() {
             @Override
@@ -90,6 +118,7 @@ public class ProfileFragment extends Fragment {
             }
         };
         myPostReference.addValueEventListener(myPostListener);
+
         locationReference=FirebaseDatabase.getInstance().getReference().child(SHARE_CHILD);
         locationListener=new ValueEventListener() {
             @Override
@@ -110,6 +139,7 @@ public class ProfileFragment extends Fragment {
             }
         };
         locationReference.addValueEventListener(locationListener);
+
         feedAdapter=new FeedAdapter(getActivity(),feedList);
         rv_my_posts.setAdapter(feedAdapter);
         linearLayoutManager=new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);

@@ -23,12 +23,14 @@ class BestNGOs extends AsyncTask<Void, Void, ListAdapter>{
     private ListView best_ngo_listView;
     private Activity activity;
     private String ngo = "NGO";
+    private View rv;
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     BestNGOs(Activity activity, View rv)
     {
         this.activity = activity;
         this. best_ngo_listView = (ListView) rv.findViewById(R.id.best_ngo_list_stats);
+        this.rv=rv;
     }
 
     @Override
@@ -52,7 +54,7 @@ class BestNGOs extends AsyncTask<Void, Void, ListAdapter>{
                 {
                     TextView title= (TextView)view.findViewById(R.id.txt_best_ngo_title);
                     TextView completed=(TextView)view.findViewById(R.id.txt_best_ngo_completed);
-                    new TasksStatus(user,completed,null).execute();
+                    new TasksStatus(user,completed,null,rv).execute();
                     title.setText(user.getName());
                 }
             }

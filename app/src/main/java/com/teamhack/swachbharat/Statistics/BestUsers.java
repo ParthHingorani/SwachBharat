@@ -22,6 +22,7 @@ class BestUsers extends AsyncTask<Void, Void, ListAdapter>{
 
     private Activity activity;
     private ListView best_usr_listView;
+    private View rv;
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private String individual = "Individual";
 
@@ -29,6 +30,7 @@ class BestUsers extends AsyncTask<Void, Void, ListAdapter>{
     {
         this.best_usr_listView = (ListView) rv.findViewById(R.id.best_usr_list_stats);
         this.activity = activity;
+        this.rv=rv;
     }
 
     protected void onPreExecute() {
@@ -49,7 +51,7 @@ class BestUsers extends AsyncTask<Void, Void, ListAdapter>{
                 {
                     TextView title= (TextView)view.findViewById(R.id.txt_best_usr_title);
                     TextView completed=(TextView)view.findViewById(R.id.txt_best_usr_completed);
-                    new TasksStatus(user,completed,null).execute();
+                    new TasksStatus(user,completed,null,rv).execute();
                     title.setText(user.getName());
                 }
             }

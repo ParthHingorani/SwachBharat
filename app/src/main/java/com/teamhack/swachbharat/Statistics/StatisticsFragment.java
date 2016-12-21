@@ -18,7 +18,7 @@ import io.fabric.sdk.android.services.concurrency.AsyncTask;
  */
 
 public class StatisticsFragment extends Fragment {
-    
+
     public StatisticsFragment() {
         // Required empty public constructor
     }
