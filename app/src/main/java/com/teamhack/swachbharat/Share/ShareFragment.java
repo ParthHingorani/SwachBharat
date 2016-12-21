@@ -3,24 +3,20 @@ package com.teamhack.swachbharat.Share;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-
-import android.os.Handler;
-import android.os.SystemClock;
-import android.graphics.Point;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.Interpolator;
-
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -90,7 +86,8 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback,Google
                             case "A garbage collection point":
                                 m=googleMap.addMarker(new MarkerOptions().title(s.category)
                                         .position(new LatLng(Double.parseDouble(s.latitude),Double.parseDouble(s.longitude)))
-                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.dustbin)));
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.dustbin))
+                                        .snippet("Status: "+s.status));
                                 break;
                             case "An open manhole":
                                 m=googleMap.addMarker(new MarkerOptions().title(s.category)
@@ -98,7 +95,6 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback,Google
                                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.manhole))
                                         .snippet("Status: "+s.status));
                                 break;
-                            case "Untidy Place":
                             case "An untidy place":
                             case "A location which is never cleaned":
                                 m=googleMap.addMarker(new MarkerOptions().title(s.category)
@@ -178,9 +174,10 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback,Google
     public boolean onMarkerClick(final Marker m) {
         switch (m.getTitle()){
             case "An open manhole":
-            case "Untidy Place":
             case "An untidy place":
             case "A location which is never cleaned":
+            case "A garbage collection point":
+            case "Stagnant water":
                 new TaskDialog(getActivity(),shareMap.get(m),m).show();
         }
 

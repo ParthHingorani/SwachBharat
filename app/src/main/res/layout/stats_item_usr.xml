@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/txt_usr_title"
-            android:text="Bharat aur Swach? LOL"
+            android:text="User Title"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textStyle="normal|bold"
             android:textSize="14sp" />

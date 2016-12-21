@@ -52,6 +52,7 @@ class ActiveUsers extends AsyncTask<Void, Void, ListAdapter>{
                     posts.setText("Posts : " + userActive.getPosts());
                     title.setText(userActive.getName());
                 }
+
             }
         };
 
