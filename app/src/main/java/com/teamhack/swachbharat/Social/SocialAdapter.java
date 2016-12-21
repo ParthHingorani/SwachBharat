@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,6 +41,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.MyViewHold
 
     static Context context;
     List<Social> socialList;
+    private int lastPosition=-1;
 
     public SocialAdapter(Context context, List<Social> socialList)  {
         this.context=context;
@@ -55,6 +58,20 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.MyViewHold
     @Override
     public void onBindViewHolder(SocialAdapter.MyViewHolder holder, int position) {
         holder.setData(socialList.get(getItemCount()-position-1));
+        setAnimation(holder.cardView, position);
+    }
+
+    public void setAnimation(View viewToAnimate, int position)
+    {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition)
+        {
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_in_right);
+            animation.setInterpolator(context,android.R.anim.anticipate_overshoot_interpolator);
+            animation.setDuration(600);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
     }
 
     @Override

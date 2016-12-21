@@ -9,12 +9,22 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+
+import android.os.Handler;
+import android.os.SystemClock;
+import android.graphics.Point;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.Interpolator;
+
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -69,38 +79,74 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback,Google
         shareListener=new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                googleMap.clear();
                 for(DataSnapshot shareSnapshot:dataSnapshot.getChildren()){
                     Share s=shareSnapshot.getValue(Share.class);
-                    Marker marker;
+                    Marker m;
                     if(shareList.isEmpty() || !shareList.contains(s)){
                         shareList.add(s);
                         switch (s.category){
+                            case "Garbage Collection Point":
                             case "A garbage collection point":
-                                marker=googleMap.addMarker(new MarkerOptions().title(s.category)
+                                m=googleMap.addMarker(new MarkerOptions().title(s.category)
                                         .position(new LatLng(Double.parseDouble(s.latitude),Double.parseDouble(s.longitude)))
-                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.dustbin))
-                                        .snippet("Status: "+s.status));
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.dustbin)));
                                 break;
                             case "An open manhole":
-                                marker=googleMap.addMarker(new MarkerOptions().title(s.category)
+                                m=googleMap.addMarker(new MarkerOptions().title(s.category)
                                         .position(new LatLng(Double.parseDouble(s.latitude),Double.parseDouble(s.longitude)))
                                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.manhole))
                                         .snippet("Status: "+s.status));
                                 break;
+                            case "Untidy Place":
                             case "An untidy place":
                             case "A location which is never cleaned":
-                                marker=googleMap.addMarker(new MarkerOptions().title(s.category)
+                                m=googleMap.addMarker(new MarkerOptions().title(s.category)
                                         .position(new LatLng(Double.parseDouble(s.latitude),Double.parseDouble(s.longitude)))
                                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.broom))
                                         .snippet("Status: "+s.status));
                                 break;
                             default:
-                                marker=googleMap.addMarker(new MarkerOptions().title(s.category)
+                                m=googleMap.addMarker(new MarkerOptions().title(s.category)
                                         .position(new LatLng(Double.parseDouble(s.latitude),Double.parseDouble(s.longitude)))
                                         .snippet("Status: "+s.status));
                                 break;
                         }
+
+                        final Marker marker=m;
+                        //Make the marker bounce
+                        final Handler handler = new Handler();
+
+                        final long startTime = SystemClock.uptimeMillis();
+                        final long duration = 2000;
+
+                        Projection proj = googleMap.getProjection();
+                        final LatLng markerLatLng = marker.getPosition();
+                        Point startPoint = proj.toScreenLocation(markerLatLng);
+                        startPoint.offset(0, -100);
+                        final LatLng startLatLng = proj.fromScreenLocation(startPoint);
+
+                        final Interpolator interpolator = new BounceInterpolator();
+
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                long elapsed = SystemClock.uptimeMillis() - startTime;
+                                float t = interpolator.getInterpolation((float) elapsed / duration);
+                                double lng = t * markerLatLng.longitude + (1 - t) * startLatLng.longitude;
+                                double lat = t * markerLatLng.latitude + (1 - t) * startLatLng.latitude;
+                                marker.setPosition(new LatLng(lat, lng));
+
+                                if (t < 1.0) {
+                                    // Post again 16ms later.
+                                    handler.postDelayed(this, 16);
+                                }
+                            }
+                        });
+
+
                         shareMap.put(marker,s);
+
                     }
                 }
             }
@@ -129,15 +175,48 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback,Google
     }
 
     @Override
-    public boolean onMarkerClick(Marker marker) {
-        switch (marker.getTitle()){
+    public boolean onMarkerClick(final Marker m) {
+        switch (m.getTitle()){
             case "An open manhole":
-            case "A garbage collection point":
+            case "Untidy Place":
             case "An untidy place":
             case "A location which is never cleaned":
-                new TaskDialog(getActivity(),shareMap.get(marker),marker).show();
+                new TaskDialog(getActivity(),shareMap.get(m),m).show();
         }
-        return false;
+
+        final Marker marker=m;
+        //Make the marker bounce
+        final Handler handler = new Handler();
+
+        final long startTime = SystemClock.uptimeMillis();
+        final long duration = 2000;
+
+        Projection proj = googleMap.getProjection();
+        final LatLng markerLatLng = marker.getPosition();
+        Point startPoint = proj.toScreenLocation(markerLatLng);
+        startPoint.offset(0, -100);
+        final LatLng startLatLng = proj.fromScreenLocation(startPoint);
+
+        final Interpolator interpolator = new BounceInterpolator();
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                long elapsed = SystemClock.uptimeMillis() - startTime;
+                float t = interpolator.getInterpolation((float) elapsed / duration);
+                double lng = t * markerLatLng.longitude + (1 - t) * startLatLng.longitude;
+                double lat = t * markerLatLng.latitude + (1 - t) * startLatLng.latitude;
+                marker.setPosition(new LatLng(lat, lng));
+
+                if (t < 1.0) {
+                    // Post again 16ms later.
+                    handler.postDelayed(this, 16);
+                }
+            }
+        });
+
+        //return false; //have not consumed the event
+        return true; //have consumed the event
     }
 
     private void enableMyLocation() {
@@ -153,8 +232,7 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback,Google
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,@NonNull int[] grantResults) {
         if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
             return;
         }
@@ -165,5 +243,7 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback,Google
         } else {
         }
     }
+
+
 
 }
