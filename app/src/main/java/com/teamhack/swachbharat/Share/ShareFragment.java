@@ -75,11 +75,11 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback,Google
                     if(shareList.isEmpty() || !shareList.contains(s)){
                         shareList.add(s);
                         switch (s.category){
-                            case "Garbage Collection Point":
                             case "A garbage collection point":
                                 marker=googleMap.addMarker(new MarkerOptions().title(s.category)
                                         .position(new LatLng(Double.parseDouble(s.latitude),Double.parseDouble(s.longitude)))
-                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.dustbin)));
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.dustbin))
+                                        .snippet("Status: "+s.status));
                                 break;
                             case "An open manhole":
                                 marker=googleMap.addMarker(new MarkerOptions().title(s.category)
@@ -87,7 +87,6 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback,Google
                                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.manhole))
                                         .snippet("Status: "+s.status));
                                 break;
-                            case "Untidy Place":
                             case "An untidy place":
                             case "A location which is never cleaned":
                                 marker=googleMap.addMarker(new MarkerOptions().title(s.category)
@@ -101,7 +100,6 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback,Google
                                         .snippet("Status: "+s.status));
                                 break;
                         }
-
                         shareMap.put(marker,s);
                     }
                 }
@@ -134,7 +132,7 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback,Google
     public boolean onMarkerClick(Marker marker) {
         switch (marker.getTitle()){
             case "An open manhole":
-            case "Untidy Place":
+            case "A garbage collection point":
             case "An untidy place":
             case "A location which is never cleaned":
                 new TaskDialog(getActivity(),shareMap.get(marker),marker).show();

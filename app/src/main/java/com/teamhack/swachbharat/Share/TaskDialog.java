@@ -28,8 +28,8 @@ import com.teamhack.swachbharat.R;
 public class TaskDialog extends Dialog implements View.OnClickListener {
 
     private static final String SHARE_CHILD = "Share", STATUS = "status";
-    int flag=0;
-    Button bt_ok,bt_cancel;
+    int user_flag=0;
+    Button bt_ok,bt_cancel,bt_accept,bt_decline;
     Share share;
     Context context;
     ProgressDialog progressDialog;
@@ -56,27 +56,68 @@ public class TaskDialog extends Dialog implements View.OnClickListener {
         firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
         if(share.getCreatedBy().uid.matches(firebaseUser.getUid()))
         {
-            flag=1;
+            user_flag =1; //Created by current user
         }
-        if(flag==0)
+
+        if(share.getStatus().contentEquals("Pending"))
         {
-            setContentView(R.layout.dialogue_task);
+            if(user_flag ==0) //Created by other user
+            {
+                setContentView(R.layout.dialogue_task);
+                bt_cancel= (Button) findViewById(R.id.bt_task_dialog_cancel);
+                bt_ok= (Button) findViewById(R.id.bt_task_dialog_ok);
+                radiogroup= (RadioGroup) findViewById(R.id.radiogroup_task);
+                bt_ok.setOnClickListener(TaskDialog.this);
+                bt_cancel.setOnClickListener(TaskDialog.this);
+            }
+
+            if(user_flag ==1) //Created by current user
+            {
+                setContentView(R.layout.dialogue_current_user_task);
+                radiogroup= (RadioGroup) findViewById(R.id.radiogroup_current_user_task);
+            }
             bt_cancel= (Button) findViewById(R.id.bt_task_dialog_cancel);
             bt_ok= (Button) findViewById(R.id.bt_task_dialog_ok);
-            radiogroup= (RadioGroup) findViewById(R.id.radiogroup_task);
             bt_ok.setOnClickListener(TaskDialog.this);
             bt_cancel.setOnClickListener(TaskDialog.this);
         }
 
-        else if(flag==1)
+        else
         {
-            setContentView(R.layout.dialogue_current_user_task);
-            radiogroup= (RadioGroup) findViewById(R.id.radiogroup_current_user_task);
+            if(share.getStatus().contentEquals("Completed"))
+            {
+                if(user_flag==0)
+                {
+                    Toast.makeText(context,"Already Complete",Toast.LENGTH_SHORT).show();
+                }
+                else if(user_flag==1)
+                {
+                    setContentView(R.layout.dialogue_delete_task);
+                    bt_decline = (Button) findViewById(R.id.bt_delete_task_decline);
+                    bt_accept = (Button) findViewById(R.id.bt_delete_task_accept);
+                    bt_accept.setOnClickListener(TaskDialog.this);
+                    bt_decline.setOnClickListener(TaskDialog.this);
+                }
+            }
+
+            else if(share.getStatus().contentEquals("Taken"))
+            {
+                if(user_flag==0) //Created by other user
+                {
+                    Toast.makeText(context,"Already Taken",Toast.LENGTH_SHORT).show();
+                }
+
+                else if(user_flag ==1) //Created by current user
+                {
+                    setContentView(R.layout.dialogue_current_user_task);
+                    radiogroup= (RadioGroup) findViewById(R.id.radiogroup_current_user_task);
+                    bt_cancel= (Button) findViewById(R.id.bt_task_dialog_cancel);
+                    bt_ok= (Button) findViewById(R.id.bt_task_dialog_ok);
+                    bt_ok.setOnClickListener(TaskDialog.this);
+                    bt_cancel.setOnClickListener(TaskDialog.this);
+                }
+            }
         }
-        bt_cancel= (Button) findViewById(R.id.bt_task_dialog_cancel);
-        bt_ok= (Button) findViewById(R.id.bt_task_dialog_ok);
-        bt_ok.setOnClickListener(TaskDialog.this);
-        bt_cancel.setOnClickListener(TaskDialog.this);
     }
 
     @Override
@@ -88,12 +129,18 @@ public class TaskDialog extends Dialog implements View.OnClickListener {
             case R.id.bt_task_dialog_ok:
                 changeStatus();
                 break;
+            case R.id.bt_delete_task_accept:
+                deleteTask();
+                break;
+            case R.id.bt_delete_task_decline:
+                dismiss();
+                break;
         }
     }
 
     private void changeStatus() {
 
-        if(flag==0)
+        if(user_flag ==0) //Other user's task
         {
             if(getCategory().contentEquals(context.getResources().getString(R.string.radio_bt_take_task))){
                 showProgressBar();
@@ -122,27 +169,11 @@ public class TaskDialog extends Dialog implements View.OnClickListener {
             dismiss();
         }
 
-        else if(flag==1)
+        if(user_flag ==1) //Current user's task
         {
             if(getCategory().contentEquals(context.getResources().getString(R.string.radio_bt_delete_task)))
             {
-                showProgressBar();
-                DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference().child(SHARE_CHILD);
-                databaseReference.child(share.key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        marker.remove();
-                        hideProgressBar();
-                        Toast.makeText(context, "Database updated", Toast.LENGTH_SHORT).show();
-
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        hideProgressBar();
-                        Toast.makeText(context, "Failed to update the status", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                deleteTask();
             }
 
             else if (getCategory().contentEquals(context.getResources().getString(R.string.radio_bt_completed)))
@@ -166,6 +197,29 @@ public class TaskDialog extends Dialog implements View.OnClickListener {
 
             dismiss();
         }
+    }
+
+    public void deleteTask()
+    {
+        showProgressBar();
+        DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference().child(SHARE_CHILD);
+        databaseReference.child(share.key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                marker.remove();
+                hideProgressBar();
+                Toast.makeText(context, "Database updated", Toast.LENGTH_SHORT).show();
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                hideProgressBar();
+                Toast.makeText(context, "Failed to update the status", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        dismiss();
     }
 
     private void hideProgressBar() {

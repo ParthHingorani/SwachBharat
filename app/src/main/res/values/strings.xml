@@ -71,6 +71,7 @@
     <string name="radio_bt_leave_task">Leave this task</string>
     <string name="radio_bt_delete_task">Delete this task</string>
     <string name="radio_bt_completed">Mark as completed</string>
+    <string name="delete_task_confirmation">Do you wish to delete this task ?</string>
 
     <!-- activity_login.xml start -->
     <string name="madeWith">made with</string>
