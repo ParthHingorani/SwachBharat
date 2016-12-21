@@ -7,7 +7,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.teamhack.swachbharat.R;
@@ -43,7 +42,7 @@ class Locations extends AsyncTask<Void, Void, ListAdapter>
     @Override
     protected ListAdapter doInBackground(Void... params) {
 
-        ListAdapter adapter = new FirebaseListAdapter<Share>(activity, Share.class, R.layout.stats_item_loc, databaseReference.child("Share").orderByChild("time"))
+        ListAdapter adapter = new ReverseFirebaseListAdapter<Share>(activity, Share.class, R.layout.stats_item_loc, databaseReference.child("Share").orderByChild("time"))
         {
             @Override
             protected void populateView(View view, Share share, int position) {

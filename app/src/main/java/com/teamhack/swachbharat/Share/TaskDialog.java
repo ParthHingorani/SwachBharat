@@ -5,22 +5,19 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.teamhack.swachbharat.Profile.User;
 import com.teamhack.swachbharat.R;
 
@@ -38,11 +35,13 @@ public class TaskDialog extends Dialog implements View.OnClickListener {
     ProgressDialog progressDialog;
     RadioGroup radiogroup;
     FirebaseUser firebaseUser;
+    Marker marker;
 
-    public TaskDialog(Context context,Share share) {
+    public TaskDialog(Context context,Share share, Marker marker) {
         super(context);
         this.context=context;
         this.share=share;
+        this.marker=marker;
     }
 
     @Override
@@ -132,6 +131,7 @@ public class TaskDialog extends Dialog implements View.OnClickListener {
                 databaseReference.child(share.key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        marker.remove();
                         hideProgressBar();
                         Toast.makeText(context, "Database updated", Toast.LENGTH_SHORT).show();
 
