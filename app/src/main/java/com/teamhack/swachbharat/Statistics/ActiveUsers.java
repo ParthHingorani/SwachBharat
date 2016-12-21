@@ -1,6 +1,7 @@
 package com.teamhack.swachbharat.Statistics;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -16,16 +17,29 @@ import static com.teamhack.swachbharat.Statistics.StatisticsFragment.setListView
  * Created by neptune on 21/12/16.
  */
 
-class ActiveUsers {
+class ActiveUsers extends AsyncTask<Void, Void, ListAdapter>{
 
+    private Activity activity;
+    private ListView usr_active_listView;
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private String individual = "Individual";
 
-    void usr_active_setdata(Activity activity, View rv)
+    ActiveUsers(Activity activity, View rv)
     {
-        ListView usr_active_listview = (ListView) rv.findViewById(R.id.active_usr_list_stats);
-        usr_active_listview.setAdapter(null);
-        usr_active_listview.deferNotifyDataSetChanged();
+        this.activity = activity;
+        this.usr_active_listView = (ListView) rv.findViewById(R.id.active_usr_list_stats);
+    }
+
+    @Override
+    protected void onPreExecute() {
+
+        usr_active_listView.setAdapter(null);
+        usr_active_listView.deferNotifyDataSetChanged();
+
+    }
+
+    @Override
+    protected ListAdapter doInBackground(Void... voids) {
 
         ListAdapter adapter = new ReverseFirebaseListAdapter<com.teamhack.swachbharat.Profile.User>(activity, com.teamhack.swachbharat.Profile.User.class, R.layout.stats_item_usr_active, databaseReference.child("User").orderByChild("posts"))
         {
@@ -41,8 +55,15 @@ class ActiveUsers {
             }
         };
 
-        setListViewHeightBasedOnChildren(usr_active_listview);
-        usr_active_listview.setAdapter(adapter);
+        return adapter;
+    }
+
+    @Override
+    protected void onPostExecute(ListAdapter adapter) {
+
+        setListViewHeightBasedOnChildren(usr_active_listView);
+        usr_active_listView.setAdapter(adapter);
+
     }
 
 }

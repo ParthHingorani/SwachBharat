@@ -1,6 +1,7 @@
 package com.teamhack.swachbharat.Statistics;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -18,15 +19,28 @@ import static com.teamhack.swachbharat.Statistics.StatisticsFragment.setListView
  * Created by neptune on 21/12/16.
  */
 
-class LocActivities {
+class LocActivities extends AsyncTask<Void, Void, ListAdapter>{
 
+    private Activity activity;
+    private ListView loc_activity_listView;
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-    void loc_activity_setdata(Activity activity, View rv)
+    LocActivities(Activity activity, View rv)
     {
-        ListView loc_activity_listView = (ListView) rv.findViewById(R.id.loc_activity_list_stats);
+        this.activity = activity;
+        this.loc_activity_listView = (ListView) rv.findViewById(R.id.loc_activity_list_stats);
+    }
+
+    @Override
+    protected void onPreExecute() {
+
         loc_activity_listView.setAdapter(null);
         loc_activity_listView.deferNotifyDataSetChanged();
+
+    }
+
+    @Override
+    protected ListAdapter doInBackground(Void... voids) {
 
         ListAdapter adapter = new FirebaseListAdapter<Social>(activity, Social.class, R.layout.stats_item_loc_activity, databaseReference.child("Social").orderByChild("time"))
         {
@@ -44,8 +58,15 @@ class LocActivities {
             }
         };
 
+        return adapter;
+    }
+
+    @Override
+    protected void onPostExecute(ListAdapter adapter) {
+
         setListViewHeightBasedOnChildren(loc_activity_listView);
         loc_activity_listView.setAdapter(adapter);
+
     }
 
 }

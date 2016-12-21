@@ -15,7 +15,7 @@ import com.teamhack.swachbharat.Share.Share;
  * Created by neptune on 20/12/16.
  */
 
-public class TasksStatus extends AsyncTask<Void, Void, Void>{
+class TasksStatus extends AsyncTask<Void, Void, Void>{
 
     private int completed, taken, newcomplete;
     private User user;
@@ -80,7 +80,7 @@ public class TasksStatus extends AsyncTask<Void, Void, Void>{
                 }
             });
             takenReference.addValueEventListener(takenEventListener);
-            
+
             takenReference.removeEventListener(takenEventListener);
         }
 

@@ -25,7 +25,7 @@ class BestUsers extends AsyncTask<Void, Void, ListAdapter>{
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private String individual = "Individual";
 
-    public BestUsers(Activity activity, View rv)
+    BestUsers(Activity activity, View rv)
     {
         this.best_usr_listView = (ListView) rv.findViewById(R.id.best_usr_list_stats);
         this.activity = activity;

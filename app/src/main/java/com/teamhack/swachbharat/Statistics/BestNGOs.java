@@ -1,6 +1,7 @@
 package com.teamhack.swachbharat.Statistics;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -17,16 +18,29 @@ import static com.teamhack.swachbharat.Statistics.StatisticsFragment.setListView
  * Created by neptune on 21/12/16.
  */
 
-class BestNGOs {
+class BestNGOs extends AsyncTask<Void, Void, ListAdapter>{
 
+    private ListView best_ngo_listView;
+    private Activity activity;
     private String ngo = "NGO";
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-    void best_ngo_setdata(Activity activity, View rv)
+    BestNGOs(Activity activity, View rv)
     {
-        ListView best_ngo_listView = (ListView) rv.findViewById(R.id.best_ngo_list_stats);
+        this.activity = activity;
+        this. best_ngo_listView = (ListView) rv.findViewById(R.id.best_ngo_list_stats);
+    }
+
+    @Override
+    protected void onPreExecute() {
+
         best_ngo_listView.setAdapter(null);
         best_ngo_listView.deferNotifyDataSetChanged();
+
+    }
+
+    @Override
+    protected ListAdapter doInBackground(Void... voids) {
 
         ListAdapter adapter = new ReverseFirebaseListAdapter<User>(activity, User.class, R.layout.stats_item_best_ngo, databaseReference.child("User").orderByChild("completed"))
         {
@@ -44,8 +58,16 @@ class BestNGOs {
             }
         };
 
+        return adapter;
+
+    }
+
+    @Override
+    protected void onPostExecute(ListAdapter adapter) {
+
         setListViewHeightBasedOnChildren(best_ngo_listView);
         best_ngo_listView.setAdapter(adapter);
+
     }
 
 }

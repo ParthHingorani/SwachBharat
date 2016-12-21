@@ -25,7 +25,7 @@ class Tasks extends AsyncTask<Void, Void, ListAdapter>{
     private Activity activity;
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-    public Tasks(Activity activity, View rv)
+    Tasks(Activity activity, View rv)
     {
         this.activity = activity;
         this.task_listView = (ListView) rv.findViewById(R.id.task_list_stats);

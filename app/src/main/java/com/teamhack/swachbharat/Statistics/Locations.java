@@ -26,7 +26,7 @@ class Locations extends AsyncTask<Void, Void, ListAdapter>
     private Activity activity;
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-    public Locations(Activity activity, View rv)
+    Locations(Activity activity, View rv)
     {
         this.loc_listView = (ListView) rv.findViewById(R.id.loc_list_stats);
         this.activity = activity;
