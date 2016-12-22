@@ -13,6 +13,7 @@ public class User {
     public String type;
     public int posts;
     public int completed;
+    public String info;
     //public String place;
 
     public void setUid(String uid) {
@@ -44,6 +45,10 @@ public class User {
         this.posts = posts;
     }
 
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
     public int getPosts()
     {
         return posts;
@@ -69,7 +74,7 @@ public class User {
         return type;
     }
 
-    //    public String getPlace() {
-//        return place;
-//    }
+    public String getInfo() {
+        return info;
+    }
 }

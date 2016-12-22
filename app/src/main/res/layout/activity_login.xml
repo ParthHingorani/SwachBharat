@@ -5,12 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_vertical|center_horizontal|center"
-    tools:context="com.teamhack.swachbharat.Login.LoginActivity">
+    tools:context="com.teamhack.swachbharat.Login.LoginActivity"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <RelativeLayout
         android:id="@+id/layout_login"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/madeWith"
@@ -59,52 +62,91 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/layout_choose">
-
-        <Button
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:text="@string/type_individual"
-            android:id="@+id/bt_individual"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:textColor="@android:color/white"
-            android:elevation="5dp"
-            android:background="@drawable/button_rounded" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="right"
+            android:id="@+id/layout_info"
+            android:layout_marginTop="20dp"
+            android:padding="5dp">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:text="@string/type_ngo"
-            android:id="@+id/bt_ngo"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:textColor="@android:color/white"
-            android:elevation="5dp"
-            android:background="@drawable/button_rounded" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_user_info"
+                android:hint="Say something about yourself" />
 
-        <Button
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Set"
+                android:id="@+id/bt_user_info"
+                style="@style/Base.CardView"
+                android:backgroundTint="@color/colorAccent" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:text="@string/type_govt"
-            android:id="@+id/bt_govt"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:textColor="@android:color/white"
-            android:elevation="5dp"
-            android:background="@drawable/button_rounded" />
+            android:layout_height="wrap_content"
+            android:id="@+id/layout_choose"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Choose your Role"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textStyle="normal|bold" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="@string/type_individual"
+                android:id="@+id/bt_individual"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:textColor="@android:color/white"
+                android:elevation="5dp"
+                android:background="@drawable/button_rounded" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="@string/type_ngo"
+                android:id="@+id/bt_ngo"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:textColor="@android:color/white"
+                android:elevation="5dp"
+                android:background="@drawable/button_rounded" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="@string/type_govt"
+                android:id="@+id/bt_govt"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:textColor="@android:color/white"
+                android:elevation="5dp"
+                android:background="@drawable/button_rounded" />
+        </LinearLayout>
+
     </LinearLayout>
+
 
 </RelativeLayout>

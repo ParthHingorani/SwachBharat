@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -45,21 +48,41 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     ProgressDialog progressDialog;
     private GoogleApiClient mGoogleApiClient;
     DatabaseReference databaseReference;
+    EditText et_user_info;
+    ValueEventListener firstListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        databaseReference= FirebaseDatabase.getInstance().getReference().child(USER_CHILD);
 
-        if(FirebaseAuth.getInstance().getCurrentUser()!=null){
-            startActivity(new Intent(LoginActivity.this,MainActivity.class));
-            finish();
-        }
+        firstListener=new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                FirebaseUser firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
+                if((firebaseUser!=null)&&(dataSnapshot.child(firebaseUser.getUid()).exists())){
+                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                    finish();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        databaseReference.addListenerForSingleValueEvent(firstListener);
+
+
         findViewById(R.id.layout_choose).setVisibility(View.INVISIBLE);
+        findViewById(R.id.layout_info).setVisibility(View.INVISIBLE);
         findViewById(R.id.bt_individual).setOnClickListener(this);
         findViewById(R.id.bt_ngo).setOnClickListener(this);
         findViewById(R.id.bt_govt).setOnClickListener(this);
-        databaseReference= FirebaseDatabase.getInstance().getReference().child(USER_CHILD);
+        findViewById(R.id.bt_user_info).setOnClickListener(this);
+        et_user_info= (EditText) findViewById(R.id.et_user_info);
         findViewById(R.id.sign_in_button).setOnClickListener(this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -173,7 +196,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
                 }else {
-                    showCategoryChooser();
+                    showUserInfo();
                 }
             }
 
@@ -187,9 +210,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void showCategoryChooser() {
+    private void showUserInfo() {
         findViewById(R.id.layout_login).setVisibility(View.GONE);
-        findViewById(R.id.layout_choose).setVisibility(View.VISIBLE);
+        findViewById(R.id.layout_info).setVisibility(View.VISIBLE);
+
+    }
+
+
+    private void showCategoryChooser() {
+        if(et_user_info.getText().length()>0) {
+            findViewById(R.id.layout_login).setVisibility(View.GONE);
+            findViewById(R.id.bt_user_info).setVisibility(View.GONE);
+            findViewById(R.id.layout_choose).setVisibility(View.VISIBLE);
+            et_user_info.setFocusable(false);
+            et_user_info.setClickable(true);
+            et_user_info.setInputType(InputType.TYPE_NULL);
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        }else {
+            et_user_info.setError("Write something");
+        }
     }
 
     private void signIn() {
@@ -237,9 +276,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.sign_in_button) {
+            databaseReference.removeEventListener(firstListener);
             signIn();
         }
         switch (v.getId()){
+            case R.id.bt_user_info:
+                showCategoryChooser();
+                break;
             case R.id.bt_individual:
                 InsertInDB(getResources().getString(R.string.type_individual));
                 break;
@@ -262,6 +305,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         user.type=type;
         user.posts=0;
         user.completed=0;
+        user.info=et_user_info.getText().toString();
         databaseReference.child(user.uid).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

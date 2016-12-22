@@ -89,6 +89,7 @@ public class TaskDialog extends Dialog implements View.OnClickListener {
                 if(user_flag==0)
                 {
                     Toast.makeText(context,"Already Complete",Toast.LENGTH_SHORT).show();
+                    dismiss();
                 }
                 else if(user_flag==1)
                 {
@@ -105,6 +106,7 @@ public class TaskDialog extends Dialog implements View.OnClickListener {
                 if(user_flag==0) //Created by other user
                 {
                     Toast.makeText(context,"Already Taken",Toast.LENGTH_SHORT).show();
+                    dismiss();
                 }
 
                 else if(user_flag ==1) //Created by current user
@@ -166,7 +168,6 @@ public class TaskDialog extends Dialog implements View.OnClickListener {
                 });
             }
 
-            dismiss();
         }
 
         if(user_flag ==1) //Current user's task
@@ -194,8 +195,6 @@ public class TaskDialog extends Dialog implements View.OnClickListener {
                     }
                 });
             }
-
-            dismiss();
         }
     }
 
@@ -218,12 +217,11 @@ public class TaskDialog extends Dialog implements View.OnClickListener {
                 Toast.makeText(context, "Failed to update the status", Toast.LENGTH_SHORT).show();
             }
         });
-
-        dismiss();
     }
 
     private void hideProgressBar() {
         progressDialog.hide();
+        dismiss();
     }
 
     private void showProgressBar() {
@@ -238,6 +236,6 @@ public class TaskDialog extends Dialog implements View.OnClickListener {
         int id=radiogroup.getCheckedRadioButtonId();
         RadioButton r_bt= (RadioButton) findViewById(id);
         return r_bt.getText().toString();
-    };
+    }
 
 }

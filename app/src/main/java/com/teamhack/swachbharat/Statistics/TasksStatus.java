@@ -69,7 +69,7 @@ public class TasksStatus extends AsyncTask<Void, Void, Void>{
 
                 }
             });
-            completedReference.child("Share").addValueEventListener(completedEventListener);
+            completedReference.child("Share").addListenerForSingleValueEvent(completedEventListener);
         if(takenText!=null)
         {
             takenEventListener = takenReference.addValueEventListener(new ValueEventListener() {

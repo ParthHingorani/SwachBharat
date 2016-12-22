@@ -1,8 +1,12 @@
 package com.teamhack.swachbharat.Profile;
 
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -22,6 +28,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.teamhack.swachbharat.Feed.Feed;
 import com.teamhack.swachbharat.Feed.FeedAdapter;
+import com.teamhack.swachbharat.Login.LoginActivity;
+import com.teamhack.swachbharat.MainActivity;
 import com.teamhack.swachbharat.R;
 import com.teamhack.swachbharat.Share.Share;
 import com.teamhack.swachbharat.Statistics.TasksStatus;
@@ -39,8 +47,8 @@ public class ProfileFragment extends Fragment {
     private static final String FEED_CHILD = "Feed";
     private final static String SHARE_CHILD="Share";
     private static final String USER_CHILD="User";
-    ImageView img_user;
-    TextView txt_user,txt_posts,txt_locations,txt_no_post,txt_taken,txt_completed;
+    ImageView img_user,bt_delete_account;
+    TextView txt_user,txt_posts,txt_locations,txt_no_post,txt_taken,txt_completed,txt_info;
     RecyclerView rv_my_posts;
     FeedAdapter feedAdapter;
     List<Feed> feedList;
@@ -70,8 +78,11 @@ public class ProfileFragment extends Fragment {
         rv_my_posts= (RecyclerView) v.findViewById(R.id.rv_my_posts);
         txt_taken= (TextView) v.findViewById(R.id.txt_no_of_tasks_taken);
         txt_completed= (TextView) v.findViewById(R.id.txt_no_of_tasks_completed);
+        txt_info= (TextView) v.findViewById(R.id.txt_profile_info);
+        bt_delete_account= (ImageView) v.findViewById(R.id.bt_delete_account);
         txt_user.setText(firebaseUser.getDisplayName());
         Glide.with(getActivity()).load(firebaseUser.getPhotoUrl()).into(img_user);
+
 
         userReference= FirebaseDatabase.getInstance().getReference().child(USER_CHILD);
         userListener= new ValueEventListener() {
@@ -80,8 +91,9 @@ public class ProfileFragment extends Fragment {
                 for(DataSnapshot userSnapshot:dataSnapshot.getChildren())
                 {
                     User user = userSnapshot.getValue(User.class);
-                    if(user.getUid().contentEquals(firebaseUser.getUid()))
+                    if(user!=null && user.getUid().contentEquals(firebaseUser.getUid()))
                     {
+                        txt_info.setText(user.info);
                         new TasksStatus(user, txt_completed, txt_taken, v).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                 }
@@ -92,7 +104,7 @@ public class ProfileFragment extends Fragment {
 
             }
         };
-        userReference.addValueEventListener(userListener);
+        userReference.addListenerForSingleValueEvent(userListener);
 
         myPostReference= FirebaseDatabase.getInstance().getReference().child(FEED_CHILD);
         myPostListener=new ValueEventListener() {
@@ -114,10 +126,10 @@ public class ProfileFragment extends Fragment {
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getActivity(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         };
-        myPostReference.addValueEventListener(myPostListener);
+        myPostReference.addListenerForSingleValueEvent(myPostListener);
 
         locationReference=FirebaseDatabase.getInstance().getReference().child(SHARE_CHILD);
         locationListener=new ValueEventListener() {
@@ -138,7 +150,43 @@ public class ProfileFragment extends Fragment {
 
             }
         };
-        locationReference.addValueEventListener(locationListener);
+        locationReference.addListenerForSingleValueEvent(locationListener);
+
+        bt_delete_account.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+                builder.setTitle("Delete Account")
+                        .setMessage("Do you really want to delete this account?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                userReference.child(firebaseUser.getUid()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        FirebaseAuth.getInstance().signOut();
+                                        startActivity(new Intent(getActivity(),LoginActivity.class));
+                                        getActivity().finish();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(getActivity(), "Couldn't delete Account. Try again!", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                dialogInterface.dismiss();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        });
+                AlertDialog dialog=builder.create();
+                dialog.show();
+            }
+        });
 
         feedAdapter=new FeedAdapter(getActivity(),feedList);
         rv_my_posts.setAdapter(feedAdapter);
