@@ -19,11 +19,14 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -55,6 +58,12 @@ public class SocialDialog extends Dialog implements View.OnClickListener, OnMapR
     MapView mapView;
     GoogleMap googleMap;
     TextView txt_mylocation;
+    private static final LatLngBounds INDIA_NS = new LatLngBounds(
+            new LatLng(6, 93.84), new LatLng(36, 76.84));
+    private static final LatLngBounds INDIA_EW = new LatLngBounds(
+            new LatLng(20, 60),new LatLng(28, 97.40));
+    private static final CameraPosition INDIA_CAMERA = new CameraPosition.Builder()
+            .target(new LatLng(21, 85.08)).zoom(3.0f).bearing(0).tilt(0).build();
 
     public SocialDialog(Context context) {
         super(context);
@@ -178,6 +187,9 @@ public class SocialDialog extends Dialog implements View.OnClickListener, OnMapR
         MapsInitializer.initialize(context);
         this.googleMap = mMap;
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        googleMap.setLatLngBoundsForCameraTarget(INDIA_NS);
+        googleMap.setLatLngBoundsForCameraTarget(INDIA_EW);
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(INDIA_CAMERA));
         enableMyLocation();
         googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override

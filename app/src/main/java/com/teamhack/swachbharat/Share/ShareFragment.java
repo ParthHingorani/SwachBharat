@@ -18,12 +18,15 @@ import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.Interpolator;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -50,6 +53,12 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback,Google
     ValueEventListener shareListener;
     final static String SHARE_CHILD="Share";
     HashMap<Marker,Share> shareMap;
+    private static final LatLngBounds INDIA_NS = new LatLngBounds(
+            new LatLng(6, 93.84), new LatLng(36, 76.84));
+    private static final LatLngBounds INDIA_EW = new LatLngBounds(
+            new LatLng(20, 60),new LatLng(28, 97.40));
+    private static final CameraPosition INDIA_CAMERA = new CameraPosition.Builder()
+            .target(new LatLng(21, 85.08)).zoom(4.0f).bearing(0).tilt(0).build();
 
     public ShareFragment() {
         // Required empty public constructor
@@ -109,36 +118,36 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback,Google
                                 break;
                         }
 
-//                        final Marker marker=m;
-//                        //Make the marker bounce
-//                        final Handler handler = new Handler();
-//
-//                        final long startTime = SystemClock.uptimeMillis();
-//                        final long duration = 2000;
-//
-//                        Projection proj = googleMap.getProjection();
-//                        final LatLng markerLatLng = marker.getPosition();
-//                        Point startPoint = proj.toScreenLocation(markerLatLng);
-//                        startPoint.offset(0, -100);
-//                        final LatLng startLatLng = proj.fromScreenLocation(startPoint);
-//
-//                        final Interpolator interpolator = new BounceInterpolator();
-//
-//                        handler.post(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                long elapsed = SystemClock.uptimeMillis() - startTime;
-//                                float t = interpolator.getInterpolation((float) elapsed / duration);
-//                                double lng = t * markerLatLng.longitude + (1 - t) * startLatLng.longitude;
-//                                double lat = t * markerLatLng.latitude + (1 - t) * startLatLng.latitude;
-//                                marker.setPosition(new LatLng(lat, lng));
-//
-//                                if (t < 1.0) {
-//                                    // Post again 16ms later.
-//                                    handler.postDelayed(this, 16);
-//                                }
-//                            }
-//                        });
+                        final Marker marker=m;
+                        //Make the marker bounce
+                        final Handler handler = new Handler();
+
+                        final long startTime = SystemClock.uptimeMillis();
+                        final long duration = 2000;
+
+                        Projection proj = googleMap.getProjection();
+                        final LatLng markerLatLng = marker.getPosition();
+                        Point startPoint = proj.toScreenLocation(markerLatLng);
+                        startPoint.offset(0, -100);
+                        final LatLng startLatLng = proj.fromScreenLocation(startPoint);
+
+                        final Interpolator interpolator = new BounceInterpolator();
+
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                long elapsed = SystemClock.uptimeMillis() - startTime;
+                                float t = interpolator.getInterpolation((float) elapsed / duration);
+                                double lng = t * markerLatLng.longitude + (1 - t) * startLatLng.longitude;
+                                double lat = t * markerLatLng.latitude + (1 - t) * startLatLng.latitude;
+                                marker.setPosition(new LatLng(lat, lng));
+
+                                if (t < 1.0) {
+                                    // Post again 16ms later.
+                                    handler.postDelayed(this, 16);
+                                }
+                            }
+                        });
 
 
                         shareMap.put(m,s);
@@ -159,6 +168,9 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback,Google
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap=googleMap;
         shareReference.addValueEventListener(shareListener);
+        googleMap.setLatLngBoundsForCameraTarget(INDIA_NS);
+        googleMap.setLatLngBoundsForCameraTarget(INDIA_EW);
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(INDIA_CAMERA));
         enableMyLocation();
         googleMap.setOnMarkerClickListener(this);
         googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
@@ -176,7 +188,7 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback,Google
             case "An open manhole":
             case "An untidy place":
             case "A location which is never cleaned":
-            case "A garbage collection point":
+            //case "A garbage collection point":
             case "Stagnant water":
                 new TaskDialog(getActivity(),shareMap.get(m),m).show();
         }
