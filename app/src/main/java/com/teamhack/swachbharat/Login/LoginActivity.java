@@ -107,17 +107,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Toast.makeText(LoginActivity.this, "activity result outside", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(LoginActivity.this, "activity result outside", Toast.LENGTH_SHORT).show();
         if (requestCode == RC_SIGN_IN) {
-            Toast.makeText(LoginActivity.this, "activity result inside", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(LoginActivity.this, "activity result inside", Toast.LENGTH_SHORT).show();
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             Log.d("signin",result.getStatus().toString());
             if (result.isSuccess()) {
-                Toast.makeText(LoginActivity.this, "activity result success", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(LoginActivity.this, "activity result success", Toast.LENGTH_SHORT).show();
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
             } else {
-                Toast.makeText(LoginActivity.this, "activity result failed", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(LoginActivity.this, "activity result failed", Toast.LENGTH_SHORT).show();
                 updateUI(null);
             }
         }
@@ -162,13 +162,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void writeUser() {
         final FirebaseUser firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
-        Toast.makeText(LoginActivity.this, "came here", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(LoginActivity.this, "came here", Toast.LENGTH_SHORT).show();
         ValueEventListener userListener=new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 hideProgressDialog();
                 if(dataSnapshot.child(firebaseUser.getUid()).exists()){
-                    Toast.makeText(LoginActivity.this, "came here inside", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(LoginActivity.this, "came here inside", Toast.LENGTH_SHORT).show();
                     Log.e("LoginActivity","came here");
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
