@@ -45,14 +45,15 @@ class ActiveUsers extends AsyncTask<Void, Void, ListAdapter>{
         {
             @Override
             protected void populateView(View view, com.teamhack.swachbharat.Profile.User userActive, int position) {
-                if(userActive.type.contentEquals(individual))
+                if(userActive!=null)
                 {
                     TextView title= (TextView)view.findViewById(R.id.txt_usr_active_title);
                     TextView posts= (TextView)view.findViewById(R.id.txt_usr_active_posts);
+                    TextView type= (TextView)view.findViewById(R.id.txt_usr_active_type);
                     posts.setText("Posts : " + userActive.getPosts());
                     title.setText(userActive.getName());
+                    type.setText("Type : " + userActive.getType());
                 }
-
             }
         };
 

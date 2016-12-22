@@ -22,7 +22,6 @@ import static com.teamhack.swachbharat.Statistics.StatisticsFragment.setListView
 class Users extends AsyncTask<Void, Void, ListAdapter>
 {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-    private String individual = "Individual";
     private View rv;
     private ListView usr_listView;
     private Activity activity;
@@ -49,13 +48,15 @@ class Users extends AsyncTask<Void, Void, ListAdapter>
         {
             @Override
             protected void populateView(View view, User user, int position) {
-                if(user.getType().contentEquals(individual))
+                if(user!=null)
                 {
                     TextView title= (TextView)view.findViewById(R.id.txt_usr_title);
                     TextView taken=(TextView)view.findViewById(R.id.txt_usr_taken);
                     TextView completed=(TextView)view.findViewById(R.id.txt_usr_completed);
+                    TextView type=(TextView)view.findViewById(R.id.txt_usr_type);
                     new TasksStatus(user,completed,taken,rv).execute();
                     title.setText(user.getName());
+                    type.setText("Type : " + user.getType());
                 }
             }
         };
