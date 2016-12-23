@@ -46,15 +46,17 @@ class LocActivities extends AsyncTask<Void, Void, ListAdapter>{
         {
             @Override
             protected void populateView(View view, Social social, int position) {
-
-                TextView title = (TextView)view.findViewById(R.id.txt_loc_activity_title);
-                TextView info = (TextView) view.findViewById(R.id.txt_loc_activity_info);
-                TextView time = (TextView) view.findViewById(R.id.txt_loc_activity_timestamp);
-                TextView by = (TextView) view.findViewById(R.id.txt_loc_activity_by);
-                title.setText(social.getCategory());
-                info.setText(social.getSocialDetail());
-                time.setText("Posted on : " + social.getTime());
-                by.setText(" by : " + social.getUser().getName());
+                if(social!=null)
+                {
+                    TextView title = (TextView)view.findViewById(R.id.txt_loc_activity_title);
+                    TextView info = (TextView) view.findViewById(R.id.txt_loc_activity_info);
+                    TextView time = (TextView) view.findViewById(R.id.txt_loc_activity_timestamp);
+                    TextView by = (TextView) view.findViewById(R.id.txt_loc_activity_by);
+                    title.setText(social.getCategory());
+                    info.setText(social.getSocialDetail());
+                    time.setText("Posted on : " + social.getTime());
+                    by.setText(" by : " + social.getUser().getName());
+                }
             }
         };
 

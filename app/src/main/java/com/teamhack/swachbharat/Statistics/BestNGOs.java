@@ -49,13 +49,15 @@ class BestNGOs extends AsyncTask<Void, Void, ListAdapter>{
 
             @Override
             protected void populateView(View view, User user, int position) {
-
-                if (user.getType().contentEquals(ngo))
+                if(user.type!=null)
                 {
-                    TextView title= (TextView)view.findViewById(R.id.txt_best_ngo_title);
-                    TextView completed=(TextView)view.findViewById(R.id.txt_best_ngo_completed);
-                    new TasksStatus(user,completed,null,rv).execute();
-                    title.setText(user.getName());
+                    if (user.getType().contentEquals(ngo))
+                    {
+                        TextView title= (TextView)view.findViewById(R.id.txt_best_ngo_title);
+                        TextView completed=(TextView)view.findViewById(R.id.txt_best_ngo_completed);
+                        new TasksStatus(user,completed,null,rv).execute();
+                        title.setText(user.getName());
+                    }
                 }
             }
         };

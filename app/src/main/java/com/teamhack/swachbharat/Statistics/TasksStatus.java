@@ -47,13 +47,19 @@ public class TasksStatus extends AsyncTask<Void, Void, Void>{
                     for(DataSnapshot shareSnapshot: dataSnapshot.getChildren())
                     {
                         Share s=shareSnapshot.getValue(Share.class);
-                        if(s.getTakenBy()!=null&&s.getTakenBy().uid.contentEquals(user.getUid())&&s.getStatus().contentEquals("Completed"))
+                        if(s.getTakenBy()!=null&&user.getUid()!=null)
                         {
-                            completed++;
+                            if(s.getTakenBy().uid.contentEquals(user.getUid())&&s.getStatus().contentEquals("Completed"))
+                            {
+                                completed++;
+                            }
                         }
                     }
-                    newcomplete=user.getCompleted()+completed;
-                    completedReference.child("User").child(user.getUid()).child("completed").setValue(newcomplete);
+                    if(user!=null)
+                    {
+                        newcomplete=user.getCompleted()+completed;
+                        completedReference.child("User").child(user.getUid()).child("completed").setValue(newcomplete);
+                    }
                     if(flag==1)
                     {
                         completedText.setText(""+completed);
@@ -79,9 +85,12 @@ public class TasksStatus extends AsyncTask<Void, Void, Void>{
                     for(DataSnapshot shareSnapshot: dataSnapshot.getChildren())
                     {
                         Share s=shareSnapshot.getValue(Share.class);
-                        if(s.getTakenBy()!=null&&s.getTakenBy().uid.contentEquals(user.getUid())&&s.getStatus().contentEquals("Taken"))
+                        if(s.getTakenBy()!=null&&user.getUid()!=null)
                         {
-                            taken++;
+                            if(s.getTakenBy().uid.contentEquals(user.getUid())&&s.getStatus().contentEquals("Taken"))
+                            {
+                                taken++;
+                            }
                         }
                     }
 

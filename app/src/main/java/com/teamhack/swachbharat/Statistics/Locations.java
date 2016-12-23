@@ -46,13 +46,15 @@ class Locations extends AsyncTask<Void, Void, ListAdapter>
         {
             @Override
             protected void populateView(View view, Share share, int position) {
-
-                TextView title= (TextView)view.findViewById(R.id.txt_loc_title);
-                TextView time =(TextView)view.findViewById(R.id.txt_loc_timestamp);
-                TextView status =(TextView)view.findViewById(R.id.txt_loc_status);
-                status.setText("Status : " + share.getStatus());
-                time.setText("Posted on : " + share.getTime());
-                title.setText(share.getCategory());
+                if(share!=null)
+                {
+                    TextView title= (TextView)view.findViewById(R.id.txt_loc_title);
+                    TextView time =(TextView)view.findViewById(R.id.txt_loc_timestamp);
+                    TextView status =(TextView)view.findViewById(R.id.txt_loc_status);
+                    status.setText("Status : " + share.getStatus());
+                    time.setText("Posted on : " + share.getTime());
+                    title.setText(share.getCategory());
+                }
             }
         };
 

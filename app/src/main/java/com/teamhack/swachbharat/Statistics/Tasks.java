@@ -44,20 +44,22 @@ class Tasks extends AsyncTask<Void, Void, ListAdapter>{
         {
             @Override
             protected void populateView(View view, Share share, int position) {
-
-                TextView title= (TextView)view.findViewById(R.id.txt_task_title);
-                TextView time =(TextView)view.findViewById(R.id.txt_task_timestamp);
-                TextView takenby=(TextView)view.findViewById(R.id.txt_task_taken_by);
-                if(share.getTakenBy()!=null)
+                if(share!=null)
                 {
-                    takenby.setText("Taken By : " + share.getTakenBy().getName());
+                    TextView title= (TextView)view.findViewById(R.id.txt_task_title);
+                    TextView time =(TextView)view.findViewById(R.id.txt_task_timestamp);
+                    TextView takenby=(TextView)view.findViewById(R.id.txt_task_taken_by);
+                    if(share.getTakenBy()!=null)
+                    {
+                        takenby.setText("Taken By : " + share.getTakenBy().getName());
+                    }
+                    else
+                    {
+                        takenby.setText("Taken By : " + share.getTakenBy());
+                    }
+                    time.setText("Posted on : " + share.getTime());
+                    title.setText(share.getCategory());
                 }
-                else
-                {
-                    takenby.setText("Taken By : " + share.getTakenBy());
-                }
-                time.setText("Posted on : " + share.getTime());
-                title.setText(share.getCategory());
             }
         };
 
