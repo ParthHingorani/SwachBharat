@@ -26,7 +26,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -53,10 +52,10 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback,Google
     ValueEventListener shareListener;
     final static String SHARE_CHILD="Share";
     HashMap<Marker,Share> shareMap;
-    private static final LatLngBounds INDIA_NS = new LatLngBounds(
+    /*private static final LatLngBounds INDIA_NS = new LatLngBounds(
             new LatLng(6, 93.84), new LatLng(36, 76.84));
     private static final LatLngBounds INDIA_EW = new LatLngBounds(
-            new LatLng(20, 60),new LatLng(28, 97.40));
+            new LatLng(20, 60),new LatLng(28, 97.40));*/
     private static final CameraPosition INDIA_CAMERA = new CameraPosition.Builder()
             .target(new LatLng(21, 85.08)).zoom(4.0f).bearing(0).tilt(0).build();
 
@@ -168,8 +167,8 @@ public class ShareFragment extends Fragment implements OnMapReadyCallback,Google
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap=googleMap;
         shareReference.addValueEventListener(shareListener);
-        googleMap.setLatLngBoundsForCameraTarget(INDIA_NS);
-        googleMap.setLatLngBoundsForCameraTarget(INDIA_EW);
+        //googleMap.setLatLngBoundsForCameraTarget(INDIA_NS);
+        //googleMap.setLatLngBoundsForCameraTarget(INDIA_EW);
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(INDIA_CAMERA));
         enableMyLocation();
         googleMap.setOnMarkerClickListener(this);
